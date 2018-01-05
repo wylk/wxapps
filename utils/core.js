@@ -36,7 +36,6 @@ module.exports = {
           Cookie: "PHPSESSID=" + s.openid
         }
       };
-      console.log(p);
     c || delete l.header.Cookie,
       a && (l.data = e.param(n)),
       o && (l.success = function (t) {

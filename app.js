@@ -59,28 +59,28 @@ App({
       success: function (o) {
         if (!o.code)
           return void e.alert("获取用户登录态失败:" + o.errMsg);
-        e.post("wxsp/login", {
+        e.post("public/login", {
           code: o.code
         }, function (o) {
           return o.error ? void e.alert("获取用户登录态失败:" + o.message) : o.isclose && i && "function" == typeof i ? void i(o.closetext, true) : void wx.getUserInfo({
             success: function (i) {
               a = i.userInfo,
-                e.get("wxsp/auth", {
+                e.get("public/auth", {
                   data: i.encryptedData,
                   iv: i.iv,
                   sessionKey: o.msg.session_key
                 }, function (e) {
-                  i.userInfo.openid = e.openId,
-                    i.userInfo.id = e.id,
-                    i.userInfo.uniacid = e.uniacid,
+                  i.userInfo.openid = e.msg.openId,
+                    i.userInfo.id = e.msg.id,
+                    i.userInfo.uniacid = e.msg.uniacid,
                     i.needauth = 0,
-                    n.setCache("userinfo", i.userInfo, 7200),
+                    n.setCache("userinfo", i.msg, 7200),
                     t && "function" == typeof t && t(a)
                 })
             },
             fail: function () {
-              e.get("wxsp/check", {
-                openid: o.openid
+              e.get("public/check", {
+                openid: o.msg.openid
               }, function (e) {
                 e.needauth = 1,
                   n.setCache("userinfo", e, 7200),
@@ -120,8 +120,8 @@ App({
   },
   globalData: {
     appid: "wx0374e8ef4f1d6f8e",
-    api: "https://lepay.51ao.com/?m=Api&",
-    approot: "https://lepay.51ao.com/",
+    api: "https://mall.epaikj.com/wxapp.php?",
+    approot: "https://mall.epaikj.com/",
     userInfo: null
   }
 })
