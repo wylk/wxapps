@@ -18,22 +18,21 @@ module.exports = {
   json: function (t, n, o, i, a, c) {
     var r = getApp(),
       s = r.getCache("userinfo"),
-      u = r.getCache("usermid"),
+      u = r.getCache("mid"),
       f = r.getCache("authkey");
     n = n || {},
-      n.comefrom = "wxapp",
-      s && (n.openid = "sns_wa_" + s.openid, "cacheset" != t && r.getSet()),
-      u && (n.mid = u.mid, n.merchid = u.merchid);
+      s && (n.openid = s.openId || s.openid),
+      //s && (n.openid = "sns_wa_" + s.openId, "cacheset" != t && r.getSet()),
+      u && (n.mid = u.mid);
     var d = this;
-    i && d.loading(),
-      n && (n.authkey = f || "");
+    i && d.loading();
     var p = a ? this.getUrl(t) : this.getUrl(t, n),
       l = {
         url: p + "&timestamp=" + +new Date,
         method: a ? "POST" : "GET",
         header: {
           "Content-type": a ? "application/x-www-form-urlencoded" : "application/json",
-          Cookie: "PHPSESSID=" + s.openid
+          Cookie: "PHPSESSID=" + n.openid
         }
       };
     c || delete l.header.Cookie,

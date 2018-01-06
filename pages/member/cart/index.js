@@ -20,7 +20,7 @@ Page({
   get_cart: function () {
     var t,
       i = this;
-    e.get("member/cart/get_cart", {}, function (e) {
+    e.get("cart/get_cart", {}, function (e) {
       t = {
         show: !0,
         ismerch: !1,

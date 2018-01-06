@@ -3,13 +3,14 @@ var e = require("utils/core.js");
 App({
   onLaunch: function () {
     var e = this.getCache("userinfo");
-    ("" == e || e.needauth) && this.getUserInfo(function (e) { }, function (e, t) {
-      var t = t ? 1 : 0,
-        e = e || "";
+    e ||  this.getUserInfo(function (e) {}, function (e, t) {
+      var t = t ? 1 : 0;
       //页面重定向
-      t && wx.redirectTo({
+      console.log(e.msg);
+      t && this.setCache("userinfo", e.msg, 7200);
+     /* wx.redirectTo({
         url: "/pages/message/auth/index?close=" + t + "&text=" + e
-      })
+      })*/
     })
   },
   requirejs: function (e) {
@@ -62,7 +63,8 @@ App({
         e.post("public/login", {
           code: o.code
         }, function (o) {
-          return o.error ? void e.alert("获取用户登录态失败:" + o.message) : o.isclose && i && "function" == typeof i ? void i(o.closetext, true) : void wx.getUserInfo({
+
+          return o.error  == 2 ? void e.alert("获取用户登录态失败:" + o.msg) : o.error == 0 ? void n.setCache("userinfo", o.msg, 7200) : void wx.getUserInfo({
             success: function (i) {
               a = i.userInfo,
                 e.get("public/auth", {
@@ -74,7 +76,7 @@ App({
                     i.userInfo.id = e.msg.id,
                     i.userInfo.uniacid = e.msg.uniacid,
                     i.needauth = 0,
-                    n.setCache("userinfo", i.msg, 7200),
+                    n.setCache("userinfo", e.msg, 7200),
                     t && "function" == typeof t && t(a)
                 })
             },
@@ -108,15 +110,7 @@ App({
     }, 10)
   },
   url: function (e) {
-    e = e || {};
-    var t = {},
-      i = "",
-      n = "",
-      a = this.getCache("usermid");
-    i = e.mid || "",
-      n = e.merchid || "",
-      "" != a ? ("" != a.mid && void 0 !== a.mid || (t.mid = i), "" != a.merchid && void 0 !== a.merchid || (t.merchid = n)) : (t.mid = i, t.merchid = n),
-      this.setCache("usermid", t, 7200)
+      this.setCache("mid", {mid:111}, 7200)
   },
   globalData: {
     appid: "wx0374e8ef4f1d6f8e",
