@@ -84,5 +84,5 @@
     "navigationBarTitleText": "加载中...",
     "navigationBarTextStyle": "white"
   },
-  "debug":false
+  "debug":true
 }

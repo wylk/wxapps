@@ -7,8 +7,12 @@ Page({
   data: {
     route: "cart",
     icons: t.requirejs("icons"),
-    merch_list: !1,
     list: !1,
+    checked:!1,
+    editischecked: !1,
+    empty:!1,
+    radio:!1,
+    all:!1,
     edit_list: []
   },
   onLoad: function (e) {
@@ -18,171 +22,157 @@ Page({
     this.get_cart()
   },
   get_cart: function () {
-    var t,
-      i = this;
+    var t;
+      i = this
     e.get("cart/get_cart", {}, function (e) {
       t = {
         show: !0,
-        ismerch: !1,
-        ischeckall: e.ischeckall,
-        total: e.total,
-        cartcount: e.total,
-        totalprice: e.totalprice,
-        empty: e.empty || !1
-      },
-        void 0 === e.merch_list ? (t.list = e.list || [], i.setData(t)) : (t.merch_list = e.merch_list || [], t.ismerch = !0, i.setData(t))
+        empty: e.error || !1,
+        list: e.msg || !1,
+        checked: !1,
+        radio: 1,
+        all: !1,
+        totalprice: '0.00',
+      };
+      i.setData(t);
     })
+  },
+  allChdeck: function(){
+    var  carts = this.data.list;
+    for (var i = 0; i < carts.length; i++) {
+        carts[i].checked = !1;
+    }
+    return carts;
   },
   edit: function (t) {
     var i,
       s = e.data(t),
       c = this;
+      console.log(s.action);
     switch (s.action) {
       case "edit":
+        var carts = this.allChdeck();
         this.setData({
-          edit: !0
+          edit: !0,
+          list: carts,
+          totalprice: '0.00',
+          all: !1
         });
+        
         break;
       case "complete":
-        this.allgoods(!1),
+          var carts = this.allChdeck();
           this.setData({
-            edit: !1
-          });
-        break;
-      case "move":
-        i = this.checked_allgoods().data,
-          a.isEmptyObject(i) || e.post("member/cart/tofavorite", {
-            ids: i
-          }, function (t) {
-            c.get_cart()
+            edit: !1,
+            list: carts,
+            totalprice: '0.00',
+            all: !1            
           });
         break;
       case "delete":
-        i = this.checked_allgoods().data,
-          a.isEmptyObject(i) || e.confirm("是否确认删除该商品?", function () {
-            e.post("member/cart/remove", {
-              ids: i
+        var id = this.checked_allgoods();
+        console.log(id);
+        !this.data.editischecked ||  e.confirm("是否确认删除该商品?", function () {
+            e.post("cart/remove", {
+                ids: id
             }, function (t) {
-              c.get_cart()
-            })
-          });
+                if(t.error == 0){
+                    e.alert(t.msg);
+                }else{
+                    e.alert(t.msg);
+                }
+                c.get_cart()
+            });
+        });
         break;
       case "pay":
-        this.data.total > 0 && wx.navigateTo({
-          url: "/pages/order/create/index"
-        })
+        var id = this.checked_allgoods();
+        console.log(id);
+        !this.data.total || e.post("cart/pay", {
+                ids: id
+            }, function (t) {
+                if(t.error == 0){
+                    e.alert(t.msg);
+                    /*wx.navigateTo({
+                      url: "/pages/order/create/index"
+                    }) */                   
+                }else{
+                    e.alert(t.msg);
+                }
+                //c.get_cart()
+        });        
+        
     }
   },
-  checkall: function (t) {
-    e.loading();
-    var i = this,
-      a = this.data.ischeckall ? 0 : 1;
-    e.post("member/cart/select", {
-      id: "all",
-      select: a
-    }, function (t) {
-      i.get_cart(),
-        e.hideLoading()
-    })
-  },
-  update: function (t) {
-    var i = this,
-      a = this.data.ischeckall ? 0 : 1;
-    e.post("member/cart/select", {
-      id: "all",
-      select: a
-    }, function (t) {
-      i.get_cart()
-    })
+  checked_allgoods: function(){
+    var list = this.data.list,
+    arr = '';
+    for(var i = 0; i < list.length; i++){
+        if(list[i].checked){
+            arr += list[i].pigcms_id+',';
+        }
+
+    }
+    return arr  || false;
   },
   number: function (t) {
     var a = this,
       s = e.pdata(t),
-      c = i.number(this, t),
-      r = s.id,
-      o = s.optionid;
-    1 == c && 1 == s.value && "minus" == t.target.dataset.action || s.value == s.max && "plus" == t.target.dataset.action || e.post("member/cart/update", {
-      id: r,
-      optionid: o,
-      total: c
+      num = ("minus" == t.target.dataset.action)? (parseFloat(s.num) - 1):(parseFloat(s.num) + 1);
+      num < 1 || s.num == s.max || e.post("cart/update", {
+      id: s.id,
+      skuId: s.skuid,
+      num: num
     }, function (t) {
       a.get_cart()
     })
   },
-  selected: function (t) {
-    e.loading();
-    var i = this,
-      a = e.pdata(t),
-      s = a.id,
-      c = 1 == a.select ? 0 : 1;
-    e.post("member/cart/select", {
-      id: s,
-      select: c
-    }, function (t) {
-      i.get_cart(),
-        e.hideLoading()
-    })
-  },
-  allgoods: function (t) {
-    var e = this.data.edit_list;
-    if (!a.isEmptyObject(e) && void 0 === t)
-      return e;
-    if (t = void 0 !== t && t, this.data.ismerch)
-      for (var i in this.data.merch_list)
-        for (var s in this.data.merch_list[i].list)
-          e[this.data.merch_list[i].list[s].id] = t;
-    else
-      for (var i in this.data.list)
-        e[this.data.list[i].id] = t;
-    return e
-  },
-  checked_allgoods: function () {
-    var t = this.allgoods(),
-      e = [],
-      i = 0;
-    for (var a in t)
-      t[a] && (e.push(a), i++);
-    return {
-      data: e,
-      cartcount: i
-    }
-  },
-  editcheckall: function (t) {
-    var i = e.pdata(t).check,
-      a = this.allgoods(!i);
+  bindCheckbox: function(e){
+    
+    var index = parseInt(e.currentTarget.dataset.index),
+        carts = this.data.list,
+        totals = 0,
+        num = 0,
+        all = !0,
+        checked = carts[index].checked; 
+        carts[index].checked = !checked;
+
+        for (var i = 0; i < carts.length; i++) {
+            if(carts[i].checked){
+                totals += (parseFloat(carts[i].price) * parseFloat(carts[i].pro_num));
+                num += 1;
+            }
+        }
+        
+         all = carts.length == num ? 1:!1;
+         console.log(num);
+        var btn = num > 0 ? 1: !1;
+      
+       this.setData({
+          all: all || !1,
+          list: carts || !1,
+          total:this.data.edit || btn,
+          editischecked:this.data.edit && btn,
+          totalprice: totals || 0.00
+        });     
+  },  
+  checkAll: function (t) {
+    var all = this.data.all,
+        totals = 0
+    var carts = this.data.list;
+    for (var i = 0; i < carts.length; i++) {
+        carts[i].checked = !all;
+        totals += parseFloat(carts[i].price) * parseFloat(carts[i].pro_num);
+        if(!carts[i].checked)totals = 0.00;
+        
+    }      
     this.setData({
-      edit_list: a,
-      editcheckall: !i
-    }),
-      this.editischecked()
-  },
-  editischecked: function () {
-    var t = !1,
-      e = !0,
-      i = this.allgoods();
-    for (var a in this.data.edit_list)
-      if (this.data.edit_list[a]) {
-        t = !0;
-        break
-      }
-    for (var s in i)
-      if (!i[s]) {
-        e = !1;
-        break
-      }
-    this.setData({
-      editischecked: t,
-      editcheckall: e
-    })
-  },
-  edit_list: function (t) {
-    var i = e.pdata(t),
-      a = this.data.edit_list;
-    void 0 !== a[i.id] && 1 == a[i.id] ? a[i.id] = !1 : a[i.id] = !0,
-      this.setData({
-        edit_list: a
-      }),
-      this.editischecked()
+      all: !all,
+      list: carts,
+      total:this.data.edit || !all,
+      editischecked:this.data.edit && !all,
+      totalprice: totals
+    });
   },
   url: function (t) {
     var i = e.pdata(t);

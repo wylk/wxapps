@@ -217,3 +217,7 @@ checkbox {
 .fui-list-angle {
   margin-right: 0;
 }
+
+.fui-list-media{
+  margin-left:10px;
+}
