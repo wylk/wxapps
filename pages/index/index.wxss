@@ -1,3 +1,4 @@
+@import "index1.wxss"
 .advimg {
   width: 100%;
   height: 100%;

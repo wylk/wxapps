@@ -1191,3 +1191,6 @@ picker-view-column {
   font-style: normal;
   padding: 4rpx 8rpx;
 }
+.entry_shop{
+  float:right;
+}

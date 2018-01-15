@@ -3,8 +3,10 @@ t.requirejs("core");
 module.exports.number = function (t, e) {
   var o = e.currentTarget.dataset,
     a = o.value,
+    // console.log(o.max);
+    // console.log(o);
     s = (o.hasOwnProperty("min") && parseInt(o.min), o.hasOwnProperty("max") ? parseInt(o.max) : 999);
-  return "minus" === e.target.dataset.action ? a > 1 && a-- : "plus" === e.target.dataset.action && (a < s || 0 == s ? a++ : this.toast(t, "最多购买5件")),
+  return "minus" === e.target.dataset.action ? a > 1 && a-- : "plus" === e.target.dataset.action && (a < s || 0 == s ? a++ : this.toast(t, "最多购买"+parseInt(o.max)+"件")),
     a
 },
   module.exports.toast = function (t, e, o) {
