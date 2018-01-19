@@ -3,28 +3,28 @@
   <view class="section">
     <view class="section__title"></view>
       <view class="flex-wrp" style="flex-direction:row;">
-        <view class="flex-item bc_green">背景图</view>
+        <view class="flex-item bc_green"></view>
       </view>
   </view>
 <image class="shop_img" mode="{{mode}}" src="{{src}}"></image><text class="shop_text">{{text}}</text>
 
-  <block wx:for="{{getShopMsg}}">
+  
 
     <view class="all">
-      <text class="count">{{item.product_count}}</text>
+      <text class="count">{{getShopMsg.product_count}}</text>
       <text class="all_product">全部商品</text>
       <text class="line">|</text>
     </view>
     <view class="all">
-      <text class="count1">{{item.collect_count}}</text>
+      <text class="count1">{{getShopMsg.collect_count}}</text>
       <text class="all_product1">收藏我的</text>
       <text class="line1">|</text>
     </view>
     <navigator url="/pages/goods/detail/index?id=1" class="all">
-      <text class="count2">{{item.order_count}}</text>
+      <text class="count2">{{getShopMsg.order_count}}</text>
       <text class="all_product2">我的订单</text>
     </navigator>
-  </block>
+
   <view id="recommand" wx:if="{{storeRecommand}}">
     <view class="fui-line" style="background: #f4f4f4;">
       <view class="text text-danger">商品推荐</view>
@@ -78,4 +78,20 @@
     <view class="text">没有更多了</view>
   </view>
   <include src="/pages/common/copyright.wxml" />
+</view>
+
+<button class="show-btn" bindtap="showDialogBtn">弹窗</button>
+<!--弹窗-->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="modal-title">添加数量</view>
+  <view class="modal-content">
+    <view class="modal-input">
+      <input placeholder-class="input-holder" type="number" maxlength="10" bindinput="inputChange" class="input" placeholder="请输入数量"></input>
+    </view>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+  </view>
 </view>

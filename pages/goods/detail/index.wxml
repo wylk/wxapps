@@ -282,7 +282,7 @@
       </view>
       <view class="label">关注</view>
     </view>
-    <navigator open-type="switchTab" class="nav-item external" url="/pages/index/index?merchid={{goods.merchid}}">
+    <navigator open-type="switchTab" class="nav-item external" url="/pages/index/index">
       <view class="icon icon-shop">
         <image class="icon20" src="{{icons.store}}"></image>
       </view>

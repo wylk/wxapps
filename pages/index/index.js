@@ -7,6 +7,7 @@ Page({
     route: "home",
     icons: t.requirejs("icons"),
     shop: {},
+    showModal: false,
     indicatorDots: false,
     autoplay: true,
     interval: 5000,
@@ -28,49 +29,51 @@ Page({
     src: {},
     text: {},
     getShopMsg: []
+  }, 
+  showDialogBtn: function () {
+    this.setData({
+      showModal: true
+    })
+  },
+  preventTouchMove: function () {
+  },
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function () {
+    this.setData({
+      showModal: false
+    });
+  },
+  /**
+   * 对话框取消按钮点击事件
+   */
+  onCancel: function () {
+    this.hideModal();
+  },
+  /**
+   * 对话框确认按钮点击事件
+   */
+  onConfirm: function () {
+    this.hideModal();
   },
   getShopMsg: function(){
     var tt = this;
-    var  e =t.getCache("userinfo");
-    var openid = e.openId || e.openid
-    console.log(openid);
-    //console.log(t.getCache("userinfo"));
-    a.get("test/getshop_info",{openid:openid},function(a){
-      //console.log(t.data.getShopMsg);
+    a.get("test/getshop_info",{},function(a){
       a.list || (a.list = []),
       typeof a.list === "object"  && (tt.setData({
-            getShopMsg: tt.data.getShopMsg.concat(a.list),
+            getShopMsg: a.list,
+            //getShopMsg: tt.data.getShopMsg.concat(a.list),
             text: a.list.shop_name || "店名未设置",
             src: a.list.shop_logo || "http://image-yp.test.upcdn.net/images/000/000/090/201712/5a3396bf1f5da.jpg"
           }))
-      console.log(text);
     })
   },
-  getShop: function () {
-    var t = this;
-    a.get("wxsp/shopInfo", {}, function (a) {
-      //console.log('shop index', a, new Date());debugger;
-      //e.wxParse("wxParseData", "html", a.copyright, t, "5"),
-        t.setData({
-          shop: a
-        })
-    })
-  },
- /* onReachBottom: function () {
-    this.data.loaded || this.data.storeRecommand.length == this.data.total || this.getRecommand()
-  },*/
   getRecommand: function () {
     var t = this;
-    t.setData({
-      loading: true
-    }),
       a.get("test/getProduct", {
         page: t.data.page
       }, function (a) {
-        var e = {
-          loading: false,
-          total: a.total
-        };
         t.setData({
           loading: false,
           total: a.total,
@@ -78,7 +81,8 @@ Page({
         }),
           a.list || (a.list = []),
          typeof a.list === "object"  && (t.setData({
-            storeRecommand: t.data.storeRecommand.concat(a.list),
+          storeRecommand: a.list,
+            // storeRecommand: t.data.storeRecommand.concat(a.list),
             page: a.page + 1
           }), a.list.length < a.pagesize && (e.loaded = true))
       })
@@ -87,28 +91,7 @@ Page({
     t.url(a)
   },
   onShow: function () {
-    var a = t.getCache("sysset");
-    wx.setNavigationBarTitle({
-      title: a.shopname || "商城首页"
-    }),
-      this.getShop(),
       this.getRecommand(),
-      this.getShopMsg()
-  },
-  onShareAppMessage: function () {
-    return a.onShareAppMessage()
-  },
-  imagesHeight: function (t) {
-    var a = t.detail.width,
-      e = t.detail.height,
-      o = t.target.dataset.type,
-      i = {},
-      s = this;
-    wx.getSystemInfo({
-      success: function (t) {
-        i[o] = t.windowWidth / a * e,
-          (!s.data[o] || s.data[o] && i[o] < s.data[o]) && s.setData(i)
-      }
-    })
+      this.getShopMsg();
   }
 })
