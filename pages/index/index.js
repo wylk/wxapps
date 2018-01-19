@@ -50,6 +50,7 @@ Page({
    */
   onCancel: function () {
     this.hideModal();
+    console.log(234)
   },
   /**
    * 对话框确认按钮点击事件
