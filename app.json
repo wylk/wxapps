@@ -43,7 +43,8 @@
     "pages/sale/coupon/my/index/index",
     "pages/sale/coupon/my/showcoupons2/index",
     "pages/public/coupon/index",
-    "pages/message/auth/index"
+    "pages/message/auth/index",
+    "pages/test/test/index"
   ],
   "tabBar": {
     "color": "#999999",
@@ -62,7 +63,7 @@
         "selectedIconPath": "static/images/icon-red/cate.png"
       },
 
-      
+
       {
         "pagePath": "pages/member/cart/index",
         "text": "购物车",
@@ -75,14 +76,15 @@
         "iconPath": "static/images/icon/people.png",
         "selectedIconPath": "static/images/icon-red/people.png"
       }
+      
     ]
   },
   "window": {
-    "backgroundColor": "#fafafa",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#0290c0",
-    "navigationBarTitleText": "加载中...",
-    "navigationBarTextStyle": "white"
+   "backgroundColor": "#ffffff",
+  "navigationBarBackgroundColor": "#000000",
+  "navigationBarTextStyle": "white",
+  "backgroundTextStyle": "dark",
+    "navigationBarTitleText": "加载中..."
   },
-  "debug":true
+  "debug":false
 }

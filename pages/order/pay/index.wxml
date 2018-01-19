@@ -2,181 +2,81 @@
 <view class="page" wx:if="{{!success && show}}">
   <view class="fui-cell-group">
     <view class="fui-cell">
-      <view class="fui-cell-text textl">订单编号</view>
-      <view class="fui-cell-remark noremark">{{list.order.ordersn}}</view>
+      <view class="">店铺:</view>
+      <view class="store-name">{{list.store.name}}</view>
     </view>
-    <view class="fui-cell">
-      <view class="fui-cell-text textl">订单金额</view>
-      <view class="text-danger">￥
-        <text>{{list.order.price}}</text>
-      </view>
-    </view>
-  </view>
-  <view class="fui-list-group">
-    <view class="fui-list" bindtap="pay" data-type="credit" wx:if="{{list.credit.success && list.order.price == 0}}">
-      <view class="fui-list-media credit radius">
-        <image class="round" src="/static/images/icon-white/money.png"></image>
-      </view>
-      <view class="fui-list-inner">
-        <view class="row">
-          <view class="row-text">确认支付</view>
+    <block wx:for="{{list.product_list}}">
+      <view class="fui-cell">
+        <view class="fui-list-media">
+          <image class="round" src="{{item.image}}">
+          </image>
         </view>
-      </view>
-      <view class="angle"></view>
-    </view>
-    <view class="fui-list" bindtap="pay" data-type="wechat" wx:if="{{list.wechat.success && list.order.price != 0}}">
-      <view class="fui-list-media wechat">
-        <image class="round" src="/static/images/icon-white/wechat.png"></image>
-      </view>
-      <view class="fui-list-inner">
-        <view class="row">
-          <view class="row-text">微信支付</view>
-        </view>
-        <view class="subtitle">微信安全支付</view>
-      </view>
-      <view class="angle"></view>
-    </view>
-    <view class="fui-list" bindtap="pay" data-type="credit" wx:if="{{list.credit.success && list.order.price != 0}}">
-      <view class="fui-list-media credit radius">
-        <image class="round" src="/static/images/icon-white/money.png"></image>
-      </view>
-      <view class="fui-list-inner">
-        <view class="row">
-          <view class="row-text">余额支付</view>
-        </view>
-        <view class="subtitle">
-          <text>当前余额</text>
-          <text class="text-danger">
-            <text>￥{{list.credit.current}}</text>
-          </text>
-        </view>
-      </view>
-      <view class="angle"></view>
-    </view>
-    <view class="fui-list" bindtap="pay" data-type="cash" wx:if="{{list.cash.success && list.order.price != 0}}">
-      <view class="fui-list-media car radius">
-        <image class="round" src="/static/images/icon-white/car.png"></image>
-      </view>
-      <view class="fui-list-inner">
-        <view class="row">
-          <view class="row-text">货到付款</view>
-        </view>
-        <view class="subtitle">收到商品后进行付款</view>
-      </view>
-      <view class="angle"></view>
-    </view>
-  </view>
-  <view class="fui-toast {{FoxUIToast.show ? 'in' : 'out'}}">
-    <view class="text">{{FoxUIToast.text}}</view>
-  </view>
-</view>
-<view class="page" wx:if="{{success}}">
-  <view class="fui-list success">
-    <view class="fui-list-media ">
-      <image class="round" src="/static/images/icon-white/deliver-48.png"></image>
-    </view>
-    <view class="fui-list-inner">
-      <view class="row">
-        <view class="">{{successData.order.status}}</view>
-      </view>
-      <view class="">{{successData.order.text}}</view>
-    </view>
-  </view>
-  <view class="fui-cell-group" wx:if="{{successData.address}}">
-    <navigator class="fui-cell" hover-class="none">
-      <image url="" class="fui-cell-icon" src="/static/images/icon/location.png"></image>
-      <view class="fui-cell-text textl info">
+        <text class="product-title">{{item.name}}\n{{item.sku_data_arr[0].name}} \t {{item.sku_data_arr[0].value}}</text>
         <view>
-          <text class="name">{{successData.address.realname}}</text>
-          <text>{{successData.address.mobile}}</text>
+          <view>￥{{item.pro_price}}</view>
+          <view class="a">x{{item.pro_num}}</view>
         </view>
-        <view class="adress">{{successData.address.province + successData.address.city + successData.address.area + ' ' + successData.address.address}}</view>
       </view>
-    </navigator>
-  </view>
-  <view class="fui-cell-group {{shop ? 'toggleSend-group' : ''}}" wx:if="{{successData.stores}}">
-    <view class="fui-cell" bindtap="shop" data-id="{{shop}}">
-      <image class="image-32" src="/static/images/icon/shop.png"></image>
-      <view class="fui-cell-text differ">
-        <text class="store">适用门店</text>
+    </block>
+    <!--留言-->
+    <block wx:if="{{list.order.status == 0}}">
+      <view class='message'>
+        <textarea class='message-text' placeholder="买家留言....." name="textarea" />
       </view>
-      <view class="num">{{successData.stores.length}}</view>
-      <view class="fui-cell-remark"></view>
+    </block>
+    <block wx:else>
+      <view class='message'>
+        <textarea placeholder="卖家留言...." name="textarea" value='{{list.order.comment?list.order.comment:"没有留言"}}' />
+      </view>
+    </block>
+    <view>总价:
+      <view class='sum-total'>￥{{list.order.sub_total}}</view>
     </view>
-    <view class="send-code fui-list">
-      <block wx:for="{{successData.stores}}">
-        <view class="fui-list">
-          <view class="fui-list-media">
-            <image src="/static/images/icon/shop.png" class="fui-list-icon"></image>
-          </view>
-          <view class="fui-list-inner store-inner">
-            <view class="title"><span class="storename">{{item.storename}}</span></view>
-            <view class="text">
-              <text class="realname">{{item.realname}}</text>
-              <text class="mobile">{{item.mobile}}</text>
-            </view>
-            <view class="text">
-              <text class="address">{{item.address}}</text>
-            </view>
-          </view>
-          <view class="fui-list-angle ">
-            <image class="image-48" bindtap="phone" data-phone="{{item.mobile}}" src="/static/images/icon/tel.png"></image>
-            <navigator hover-class="none" url="/pages/order/store/map?id={{item.id}}">
-              <image class="image-48" src="/static/images/icon/location.png"></image>
-            </navigator>
-          </view>
-        </view>
+  </view>
+  <view class='v-line'></view>
+  <!--物流-->
+  <view class='block-express'>
+    配送方式
+    <span class="btn-express"> 快递配送 </span>
+    <view class="express-user">
+      <text>
+      {{list.user_address.name}},{{list.user_address.tel}}
+      {{list.user_address.province_txt}}\t{{list.user_address.city_txt}}\t{{list.user_address.area_txt}}\t
+      {{list.user_address.address}}
+      </text>
+    </view>
+    <view class='express-edit express-right'>
+      <block wx:if="{{list.user_address_list}}">
+        <button class='ex-btn' type="primary" plain="false">切换</button>
+
+        <!--<navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}" open-type="switchTab">-->
+        <navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}">
+          <button class='ex-btn' type="warn" plain="false">修改</button>
+        </navigator>
       </block>
     </view>
   </view>
-  <view class="fui-list-group" wx:if="{{successData.carrier || successData.store}}">
-    <view class="fui-list noclick" wx:if="{{successData.carrier}}">
-      <view class="fui-list-media">
-        <image class="fui-list-icon" src="/static/images/icon/people.png"></image>
-      </view>
-      <view class="fui-list-inner">
-        <view class="title">{{successData.carrier.carrier_realname}} {{successData.carrier.carrier_mobile}}</view>
-      </view>
-    </view>
-    <view class="fui-list" wx:if="{{successData.store}}">
-      <view class="fui-list-media">
-        <image src="/static/images/icon/shop.png" class="fui-list-icon"></image>
-      </view>
-      <view class="fui-list-inner store-inner">
-        <view class="title"><span class="storename">{{successData.store.storename}}</span></view>
-        <view class="text">
-          <text class="realname">{{successData.store.realname}}</text>
-          <text class="mobile">{{successData.store.mobile}}</text>
-        </view>
-        <view class="text">
-          <text class="address">{{successData.store.address}}</text>
-        </view>
-      </view>
-      <view class="fui-list-angle ">
-        <image class="image-48" bindtap="phone" src="/static/images/icon/tel.png" data-phone="{{successData.store.mobile}}"></image>
-        <navigator hover-class="none" url="/pages/order/store/map?id={{successData.store.id}}">
-          <image class="image-48" src="/static/images/icon/location.png"></image>
-        </navigator>
-      </view>
-    </view>
+  <view class='v-line'></view>
+  <!--E币支付-->
+  <block >
+  <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1}}">
+  E币{{list.user.point_unbalance}} \t\t 可抵现{{list.user.point_unbalance/100}}  \t\t\t\t <view class='eb-pay-icon'><icon  type="{{is_eb?'success_circle':'circle'}}" size="30"/></view>
   </view>
-  <view class="fui-cell-group">
-    <view class="fui-cell">
-      <view class="fui-cell-text ">{{successData.paytype}}</view>
-      <view class="text-danger">￥
-        <text>{{successData.order.price}}</text>
-      </view>
-    </view>
-    <view class="fui-cell">
-      <view class="fui-cell-remark noremark">请到订单详情中查看详细信息</view>
-    </view>
+  </block>
+  <view class='v-line'></view>
+  <view class='total-msg'>
+    <text>{{list.order.sub_total}} \t+\t ¥{{list.order.postage}}运费   \t\t\t需付:{{list.order.total}}
+  </text>
+
   </view>
-  <view class="operate">
-    <navigator open-type="redirect" class="btn btn-default" url="/pages/order/detail/index?id={{successData.order.id}}">
-      订单详情
-    </navigator>
-    <navigator open-type="switchTab" url="/pages/index/index" class="btn btn-default">
-      返回首页
-    </navigator>
+  <view class='v-line'></view>
+  <!--支付-->
+  <view style="margin:33px auto;">
+    <block wx:if="{{!is_eb}}">
+      <button class="marginview" data-type="weixin" bindtap="pay">微信安全支付</button>
+    </block>
+    <view wx:if="{{is_eb}}">
+      <button class='ebpay' data-type="eb_pay" bindtap="pay">E币支付</button>
+    </view>
   </view>
 </view>

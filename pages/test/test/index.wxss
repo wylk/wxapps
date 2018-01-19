@@ -1,7 +1,44 @@
-.inputView{
-     border: 2px solid red;
-     border-radius: 40px;
-     margin-left: 15px;
-     margin-right: 15px;
-     margin-top: 15px;
- }
+@import "../../common/weui.wxss";
+label {
+  display: inline-block;
+  min-width: 270rpx;
+  margin-right: 20rpx;
+}
+form{
+  width: 100%;
+}
+
+.weui-cell__bd{
+    padding:16px;
+}
+.weui-input{
+    float:right;
+    position:absolute;
+    top:5px;
+    left:86px;
+    text-align:center;
+}
+.weui-cell__bd label{
+    margin-left:-25px;
+}
+.btn-area{
+    margin-top: 20px;
+}
+.btn-area button{
+    margin-top:10px;
+}
+.location_area{
+    margin-top:-24px;
+    margin-left:83px;
+}
+textarea {
+    width: 700rpx;
+    padding: 25rpx 0;
+}
+.textarea-wrp {
+    padding: 0 25rpx;
+    background-color: #fff;
+}
+.btn1 button{
+    margin-top:10px;
+}

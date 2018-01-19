@@ -5,43 +5,73 @@ Page({
   data: {
     icons: t.requirejs("icons"),
     success: false,
-    successData: {}
+    order_no: !1,
+    successData: {},
+    list: !1,
+    product_list: !1,
+    store: !1,
+    user_address: !1,
+    user_address_list: !1,
 
   },
   onLoad: function (e) {
+    console.log(e);
     this.setData({
-      options: e
-    }),
-      t.url(e)
+      order_no: e.order_no
+    });
   },
   onShow: function () {
     this.get_list()
   },
   get_list: function () {
     var t = this;
-    e.get("order/pay", t.data.options, function (i) {
-      if (50018 == i.error)
-        return void wx.navigateTo({
-          url: "/pages/order/details/index?id=" + t.data.options.id
+    e.get("test/pay", { order_no: this.data.order_no }, function (i) {
+      console.log(i);
+      if (i.err_code == 0) {
+        i.err_msg.user_address || wx.navigateTo({
+          url: '/pages/test/test/index'
         });
-      !i.wechat.success && "0.00" != i.order.price && i.wechat.payinfo && e.alert(i.wechat.payinfo.message + "\n不能使用微信支付!"),
+
+
         t.setData({
-          list: i,
-          show: true
-        })
+          show: 1,
+          list: i.err_msg
+        });
+      } else {
+        e.alert(i.err_msg);
+      }
+
+
     })
   },
+  save: function(){
+    console.log(1212);
+    wx.navigateTo({
+              /* url: "/pages/order/create/index?id=" + i.data.options.id + "&total=" + i.data.total + "&optionid=" + s + "&gdid=" + t.gdid*/
+              // url: "/pages/test/test/index?address_id="+this.data.list.user_address.address_id
+              url:"/pages/index/index"
+            })    
+  },
   pay: function (t) {
-    var i = e.pdata(t).type,
-      o = this,
-      a = this.data.list.wechat;
-    "wechat" == i ? e.pay(a.payinfo, function (t) {
-      "requestPayment:ok" == t.errMsg && o.complete(i)
-    }) : "credit" == i ? e.confirm("确认要支付吗?", function () {
-      o.complete(i)
-    }, function () { }) : "cash" == i ? e.confirm("确认要使用货到付款吗?", function () {
-      o.complete(i)
-    }, function () { }) : o.complete(i)
+    var data = {}
+    data.payType = e.pdata(t).type;
+    data.address_id = this.data.list.user_address.address_id;
+    data.postage_list = this.data.list.postage_list;
+    data.is_app = true;
+    data.orderNo = this.data.order_no;
+    data.appType = 'wxapp';
+    console.log(data);
+    e.post("order/saveorder", data, function (re) {
+      if(re.err_code == 0){
+        console.log(re);
+        e.pay(re.err_msg, function (t) {
+          console.log(t);
+          "requestPayment:ok" == t.errMsg && console.log('支付成功。。。');
+        },function(e){
+          console.log(e);
+        })
+      }
+    })
   },
   complete: function (t) {
     var o = this;

@@ -1,8 +1,10 @@
-var t = getApp();
+var t = getApp(),
+r = t.requirejs("core");
 Page({
   data: {},
-  onLoad: function (t) {
-    console.log(t),
+  onLoad: function () {
+    // console.log(r);
+    console.log(t);
       this.setData({
         close: t.close,
         text: t.text

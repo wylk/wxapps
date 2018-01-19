@@ -24,20 +24,20 @@ Page({
     t.setData({
       loading: true
     }),
-      a.get("order/get_list", {
+      a.get("order/user_all", {
         page: t.data.page,
         status: t.data.status,
         merchid: 0
       }, function (e) {
-        0 == e.error ? (t.setData({
+        0 == e.err_code ? (t.setData({
           loading: false,
           show: true,
           total: e.total,
           empty: true
-        }), e.list.length > 0 && t.setData({
+        }), e.err_msg.list.length > 0 && t.setData({
           page: t.data.page + 1,
-          list: t.data.list.concat(e.list)
-        }), e.list.length < e.pagesize && t.setData({
+          list: t.data.list.concat(e.err_msg.list)
+        }), e.err_msg.list.length < e.pagesize && t.setData({
           loaded: true
         })) : a.toast(e.message, "loading")
       }, this.data.show)

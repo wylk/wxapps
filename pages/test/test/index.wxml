@@ -1,46 +1,75 @@
-<view class="container">
-    <swiper indicator-dots="{{indicatorDots}}"
-      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}">
-        <swiper-item>
-          <image src="{{item}}" class="slide-image" style="width:320px;height:150px;"/>
-        </swiper-item>
-      </block>
-    </swiper>
-</view>
+<form catchsubmit="formSubmit" catchreset="formReset">
+      <view class="page-section">
 
-<form bindsubmit="formSubmit" bindreset="formReset">
-    <view class="section section_gap">
-        <view class="section__title">switch</view>
-        <switch name="switch"/>
-    </view>
-    <view class="section section_gap">
-        <view class="section__title">slider</view>
-        <slider name="slider" show-value ></slider>
-    </view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+              <label>收货人</label>
+              <input class="weui-input" name="user_name" placeholder="输入收货人姓名" auto-focus  type="text" confirm-type="done" value="{{name}}"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="page-section">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+              <label>联系电话</label>
+              <input  class="weui-input" name="tel" placeholder="输入联系电话" type="number" value="{{tel}}"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="page-section">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+              <label>选择地区</label>
+              <input class="weui-input" name="area" placeholder="选择地区" value="{{province}}-{{city}}-{{county}}" focus="{{focus}}" bindfocus="open" />
+                <view wx:if="{{condition}}" class="citypicker">
+            <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange" class="citybody">
 
-    <view class="section">
-        <view class="section__title">input</view>
-        <input name="input" placeholder="please input here" />
+              <picker-view-column>
+                <view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+              </picker-view-column>
+              <picker-view-column>
+                <view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+              </picker-view-column>
+              <picker-view-column>
+                <view wx:for="{{countys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+              </picker-view-column>
+            </picker-view>
+             <view class="btn1">
+                <button type="primary" bindtap="open" class="city-true">确定</button>
+                <button type="warn" bindtap="open" class="city-cancel">取消</button>
+              </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="page-section">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+              <label>地图定位</label>
+              <view bindtap="location" class="location_area">{{text}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+  <view class="page-body">
+    <view class="page-section">
+      <view class="page-section-title">详细地址</view>
+      <view class="textarea-wrp">
+        <textarea name="address" auto-focus="false" style="height: 3em" value="{{detail_area}}"/>
+      </view>
     </view>
-    <view class="section section_gap">
-        <view class="section__title">radio</view>
-        <radio-group name="radiogroup">
-            <label><radio value="radio1"/>radio1</label>
-            <label><radio value="radio2"/>radio2</label>
-        </radio-group>
-    </view>
-    <view class="section section_gap">
-        <view class="section__title">checkbox</view>
-        <checkbox-group name="checkbox">
-            <label><checkbox value="checkbox1"/>checkbox1</label>
-            <label><checkbox value="checkbox2"/>checkbox2</label>
-        </checkbox-group>
     </view>
     <view class="btn-area">
-        <button formType="submit">Submit</button>
+        <button type="primary" formType="submit">Submit</button>
         <button formType="reset">Reset</button>
-    </view>
-</form>
+      </view>
+    </form>
 
 

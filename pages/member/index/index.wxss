@@ -1,6 +1,5 @@
 .member-head {
   height: 260rpx;
-  background: #fe5455;
   padding-top: 40rpx;
   position: relative;
   display: -webkit-box;
@@ -83,7 +82,7 @@
 
 .member-head .child .number {
   font-size: 28rpx;
-  color: #fef31f;
+  color: #fff;
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;

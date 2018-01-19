@@ -958,7 +958,7 @@
 }
 
 .fui-icon-group .fui-icon-col {
-  width: 25%;
+  width: 20%;
   height: auto;
   position: relative;
   padding: 25rpx 0;

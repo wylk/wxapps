@@ -42,7 +42,7 @@
   <view class="fui-footer" wx:if="{{!empty}}">
     <view class="tool">
       <view class="check" bindtap="checkAll">
-        <icon type="{{all ? 'success_circle' : 'circle'}}" size="18"/>
+        全选:<icon type="{{all ? 'success_circle' : 'circle'}}" size="18"/>
       </view>
       <view class="text">
         <view class="title" wx:if="{{!edit}}">合计：

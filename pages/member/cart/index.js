@@ -86,16 +86,20 @@ Page({
         });
         break;
       case "pay":
+      wx.showLoading({
+            title: '操作中',
+            mask: true
+        });
         var id = this.checked_allgoods();
-        console.log(id);
         !this.data.total || e.post("cart/pay", {
                 ids: id
             }, function (t) {
                 if(t.error == 0){
-                    e.alert(t.msg);
-                    /*wx.navigateTo({
-                      url: "/pages/order/create/index"
-                    }) */                   
+                    //e.alert(t.msg);
+                    wx.hideLoading();
+                    wx.navigateTo({
+                      url: "/pages/order/pay/index?order_no="+t.order_no
+                    })                   
                 }else{
                     e.alert(t.msg);
                 }
@@ -153,7 +157,7 @@ Page({
           list: carts || !1,
           total:this.data.edit || btn,
           editischecked:this.data.edit && btn,
-          totalprice: totals || 0.00
+          totalprice: Math.round(totals * 100) / 100 || 0.00
         });     
   },  
   checkAll: function (t) {
@@ -171,7 +175,7 @@ Page({
       list: carts,
       total:this.data.edit || !all,
       editischecked:this.data.edit && !all,
-      totalprice: totals
+      totalprice: Math.round(totals * 100) / 100
     });
   },
   url: function (t) {

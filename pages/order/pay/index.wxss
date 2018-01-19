@@ -1,5 +1,109 @@
+.a {
+  float: right;
+}
+
+.ebpay {
+  background: #fff;
+  width: 90%;
+  height: 40px;
+  line-height: 40px;
+}
+
 .fui-list-inner .subtitle {
   color: #8a8a8a;
+}
+
+.message {
+  height: 60px;
+}
+.sum-total{
+  float:right;
+  margin-right:30px;
+}
+.v-line{
+  height:10px;
+  background:#f7f7f7;
+  width: 100%;
+}
+.btn-express{
+  height:30px;
+  font-size:12px;
+  line-height: 30px;
+  color:#FF8C00;
+}
+.ex-btn{
+  height: 30px;
+  line-height: 30px;
+  margin-top:5px;
+}
+.eb-pay-icon{
+  margin-left:54px;
+  margin-right:20px;
+}
+.total-msg{
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+}
+.eb-pay{
+  height:60px;
+  line-height: 60px;
+  padding-left:10px;
+  display:flex;
+  justify-content:flex-end;
+}
+.express-right{
+  position: absolute;
+  right: 21px;
+  bottom: 160px;
+}
+.express-user{
+  width: 65%;
+  min-height:40px;
+  font-size: 15px;
+}
+.express-edit{
+  width: 25%;
+  min-height:40px;
+  float: right;
+}
+.express-type{
+  height:60px;
+  line-height: 60px;
+  padding:auto 1px;
+  border-bottom: 1px solid #8a8a8a;
+}
+.block-express{
+  margin-top:10px;
+  min-height:70px;
+}
+.message-text {
+  border: 1px solid #8a8a8a;
+  height: 35px;
+  width: 90%;
+  margin: 12px auto;
+}
+
+.marginview {
+  color: #fff;
+  height: 40px;
+  line-height: 40px;
+  width: 90%;
+  border-color: #1aad16;
+  background-color: #1aad16;
+}
+
+.store-name {
+  margin-left: 20rpx;
+}
+
+.product-title {
+  font-size: 12px;
+  width: 225px;
+}
+
+.total-span {
+  font-size: 10px;
 }
 
 .fui-list {

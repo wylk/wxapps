@@ -12,28 +12,30 @@
   <view class="contain" wx:if="{{list.length != 0}}">
     <block wx:for="{{list}}">
       <view class="fui-list-group noclick">
-        <navigator hover-class="none" url="/pages/order/detail/index?id={{item.id}}">
+        <navigator hover-class="none" url="/pages/order/detail/index?id={{item.order_id}}">
           <view class="fui-list-group-title">
             <view class="order-num">订单号：
-              <text>{{item.ordersn}}</text>
+              <text>{{item.order_no_txt}}</text>
             </view>
-            <view class="statuscss">{{item.statusstr}}</view>
+            <view class="statuscss"></view>
           </view>
-          <block wx:for="{{item.goods[0].goods}}" wx:for-index="key" wx:for-item="val">
+          <block wx:for="{{item.order_product_list}}" wx:for-index="key" wx:for-item="val">
             <view class="fui-list goods-info">
               <view class="fui-list-media">
-                <image src="{{val.thumb}}" class="round goods_img"></image>
+                <image src="{{val.image}}" class="round goods_img"></image>
               </view>
               <view class="fui-list-inner">
-                <view class="text text-left">{{val.title}}</view>
-                <view class="subtitle text-left">{{val.optiontitle}}</view>
+                <view class="text text-left">{{val.name}}</view>
+                <block wx:for="{{val.sku_data_arr}}">
+                <view class="subtitle text-left">{{item.name}} {{item.value}}</view>
+                </block>
               </view>
               <view class="num">
                 <view class="text-right">￥
                   <text>{{val.price}}</text>
                 </view>
                 <view class="text-right">x
-                  <text>{{val.total}}</text>
+                  <text>{{val.pro_num}}</text>
                 </view>
               </view>
             </view>
@@ -41,11 +43,11 @@
           <view class="fui-list list-padding">
             <text class="fui-list-inner text-right totle">
               <text>共</text>
-              <text class="text-danger">{{item.goods.length}}</text>
+              <text class="text-danger">{{item.pro_num}}</text>
               <text>个商品 实付</text>
               <text class="text-danger">
                 <text>￥</text>
-                <text>{{item.price}}</text>
+                <text>{{item.total}}</text>
               </text>
             </text>
           </view>
