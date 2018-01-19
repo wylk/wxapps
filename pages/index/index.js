@@ -50,7 +50,6 @@ Page({
    */
   onCancel: function () {
     this.hideModal();
-    eastsat
   },
   /**
    * 对话框确认按钮点击事件
