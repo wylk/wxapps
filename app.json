@@ -56,13 +56,6 @@
         "iconPath": "static/images/icon/home.png",
         "selectedIconPath": "static/images/icon-red/home.png"
       },
-      {
-        "pagePath": "pages/shop/caregory/index",
-        "text": "全部分类",
-        "iconPath": "static/images/icon/cate.png",
-        "selectedIconPath": "static/images/icon-red/cate.png"
-      },
-
 
       {
         "pagePath": "pages/member/cart/index",
@@ -76,7 +69,7 @@
         "iconPath": "static/images/icon/people.png",
         "selectedIconPath": "static/images/icon-red/people.png"
       }
-      
+
     ]
   },
   "window": {
