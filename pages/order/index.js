@@ -9,7 +9,8 @@ Page({
     page: 1,
     code: false,
     cancel: e.cancelArray,
-    cancelindex: 0
+    cancelindex: 0,
+    status1: ''
   },
   onLoad: function (a) {
     this.setData({
@@ -23,10 +24,14 @@ Page({
     var t = this;
     t.setData({
       loading: true
-    }),
+    });
+    var status = t.data.status;
+    // console.log(typeof status)
+    console.log(t.data.status);
       a.get("order/user_all", {
         page: t.data.page,
         status: t.data.status,
+        status1: t.data.status1,
         merchid: 0
       }, function (e) {
         0 == e.err_code ? (t.setData({
