@@ -79,15 +79,18 @@
   </view>
   <include src="/pages/common/copyright.wxml" />
 </view>
-
-<button class="show-btn" bindtap="showDialogBtn">弹窗</button>
 <!--弹窗-->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
-  <view class="modal-title">添加数量</view>
+  <view class="modal-title">手机绑定</view>
   <view class="modal-content">
     <view class="modal-input">
-      <input placeholder-class="input-holder" type="number" maxlength="10" bindinput="inputChange" class="input" placeholder="请输入数量"></input>
+      <input placeholder-class="input-holder" type="number" maxlength="11" id="tel" bindchange="inputChange" class="input" placeholder="请输入手机号"></input>
+    </view>
+  </view>
+   <view class="modal-content">
+    <view class="modal-input">
+      <input placeholder-class="input-holder" type="number" maxlength="20" id="password" bindchange="inputChange" class="input" placeholder="请输入密码"></input>
     </view>
   </view>
   <view class="modal-footer">

@@ -107,6 +107,8 @@
 
 .icon-maiguangliao:before { content: "\e640"; }
 
+
+
 .show-btn {
   margin-top: 100rpx;
   color: #22cc22;
@@ -145,7 +147,7 @@
 }
 
 .modal-content {
-  padding: 50rpx 32rpx;
+  padding: 23rpx 32rpx;
 }
 
 .modal-input {

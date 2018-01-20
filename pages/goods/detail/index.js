@@ -398,20 +398,9 @@ Page({
         product_id: a.data.goods.product.product_id
       }, function (t) {
         var msg = t.err_msg;
-        //console.log(msg);
         a.setData({
           pickerOption: msg
         });
-        //console.log(this.data.pickerOption);
-        // console.log(pi n > 0 && (d = t.options, a.setData({
-        //   pickerOption: t
-        // })),ckerOption);
-        /* t.diyform && a.setData({
-           diyform: {
-             fields: t.diyform.fields,
-             f_data: t.diyform.lastdata
-           }
-         })*/
       })
   },
   for_property_list: function (t) {
