@@ -38,30 +38,33 @@
   <view class='block-express'>
     配送方式
     <span class="btn-express"> 快递配送 </span>
-    <view class="express-user">
-      <text>
+    <view class='bk-express flex-row'>
+      <view class="express-user">
+        <text>
       {{list.user_address.name}},{{list.user_address.tel}}
       {{list.user_address.province_txt}}\t{{list.user_address.city_txt}}\t{{list.user_address.area_txt}}\t
       {{list.user_address.address}}
       </text>
-    </view>
-    <view class='express-edit express-right'>
-      <block wx:if="{{list.user_address_list}}">
-        <button class='ex-btn' type="primary" plain="false">切换</button>
-
-        <!--<navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}" open-type="switchTab">-->
-        <navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}">
-          <button class='ex-btn' type="warn" plain="false">修改</button>
-        </navigator>
-      </block>
+      </view>
+      <view class='express-edit express-right'>
+        <block wx:if="{{list.user_address_list}}" class="">
+          <button class='ex-btn' type="primary" plain="false">切换</button>
+          <navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}">
+            <button class='ex-btn' type="warn" plain="false">修改</button>
+          </navigator>
+        </block>
+      </view>
     </view>
   </view>
   <view class='v-line'></view>
   <!--E币支付-->
-  <block >
-  <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1}}">
-  E币{{list.user.point_unbalance}} \t\t 可抵现{{list.user.point_unbalance/100}}  \t\t\t\t <view class='eb-pay-icon'><icon  type="{{is_eb?'success_circle':'circle'}}" size="30"/></view>
-  </view>
+  <block>
+    <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1}}">
+      E币{{list.user.point_unbalance}} \t\t 可抵现{{list.user.point_unbalance/100}} \t\t\t\t
+      <view class='eb-pay-icon'>
+        <icon type="{{is_ep?'success_circle':'circle'}}" size="30"  bindtap='check_eb'/>
+      </view>
+    </view>
   </block>
   <view class='v-line'></view>
   <view class='total-msg'>

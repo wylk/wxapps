@@ -11,6 +11,7 @@ Page({
     product_list: !1,
     store: !1,
     user_address: !1,
+    is_ep: !1,
     user_address_list: !1,
 
   },
@@ -31,8 +32,6 @@ Page({
         i.err_msg.user_address || wx.navigateTo({
           url: '/pages/test/test/index'
         });
-
-
         t.setData({
           show: 1,
           list: i.err_msg
@@ -40,19 +39,18 @@ Page({
       } else {
         e.alert(i.err_msg);
       }
-
-
     })
   },
-  save: function(){
-    console.log(1212);
+  save: function () {
     wx.navigateTo({
-              /* url: "/pages/order/create/index?id=" + i.data.options.id + "&total=" + i.data.total + "&optionid=" + s + "&gdid=" + t.gdid*/
-              // url: "/pages/test/test/index?address_id="+this.data.list.user_address.address_id
-              url:"/pages/index/index"
-            })    
+      url: "/pages/index/index"
+    })
   },
   pay: function (t) {
+    wx.showLoading({
+      title: '操作中',
+      mask: true
+    });
     var data = {}
     data.payType = e.pdata(t).type;
     data.address_id = this.data.list.user_address.address_id;
@@ -60,43 +58,36 @@ Page({
     data.is_app = true;
     data.orderNo = this.data.order_no;
     data.appType = 'wxapp';
-    console.log(data);
     e.post("order/saveorder", data, function (re) {
-      if(re.err_code == 0){
+      wx.hideLoading();
+      if (re.err_code == 0) {
         console.log(re);
         e.pay(re.err_msg, function (t) {
           console.log(t);
           "requestPayment:ok" == t.errMsg && console.log('支付成功。。。');
-        },function(e){
+        }, function (e) {
           console.log(e);
         })
       }
     })
-  },
-  complete: function (t) {
-    var o = this;
-    e.post("order/pay/complete", {
-      id: o.data.options.id,
-      type: t
-    }, function (t) {
-      if (0 == t.error)
-        return wx.setNavigationBarTitle({
-          title: "支付成功"
-        }), void o.setData({
-          success: true,
-          successData: t
-        });
-      i.toast(o, t.message)
-    }, true, true)
-  },
-  shop: function (t) {
-    0 == e.pdata(t).id ? this.setData({
-      shop: 1
-    }) : this.setData({
-      shop: 0
+  },//选择eb
+  check_eb: function () {
+    var tt = this,
+    is_ep = !tt.data.is_ep,
+    is_eb = !1,
+    total = parseFloat(tt.data.list.order.total),
+    order_id = tt.data.list.order.order_id,
+    eb = parseFloat(tt.data.list.user.point_unbalance / 100);
+    if (eb >= total){
+      is_eb = is_ep;
+    }else{
+      e.post("order/check_eb", {type: is_ep,eb:eb,order_id:order_id}, function (i) {
+
     })
-  },
-  phone: function (t) {
-    e.phone(t)
+    }
+    tt.setData({
+      is_ep:is_ep,
+      is_eb:is_eb
+      })
   }
 })
