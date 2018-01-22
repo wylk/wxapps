@@ -7,8 +7,7 @@
     <view class="child">
       <view class="title">可用E币</view>
       <view class="number">{{member.user.eb}}</view>
-      <view class="title">消费总额</view>
-      <view class="number">{{member.store_user_data.money}}</view>
+
     </view>
     <view class="child userinfo">
       <view class="avatar">
@@ -18,8 +17,8 @@
       <view class="level"></view>
     </view>
     <view class="child">
-      <view class="title">123</view>
-      <view class="number">2324</view>
+      <view class="title">消费总额</view>
+      <view class="number">￥{{member.store_user_data.money}}</view>
       <navigator hidden="true" class="btn" hover-class="btn-hover">
         兑换
       </navigator>
@@ -49,7 +48,7 @@
         </view>
         <view class="text">待收货</view>
       </navigator>
-      <navigator hover-class="none" class="fui-icon-col" url="/pages/order/index?status=2">
+      <navigator hover-class="none" class="fui-icon-col" url="/pages/order/index?status=3">
         <view class="badge" wx:if="{{member.store_user_data.order_complete > 0}}">{{member.store_user_data.order_complete}}</view>
         <view class="icon">
           <image src="/static/images/icon/complate.png"></image>
@@ -66,7 +65,7 @@
     </view>
   </view>
   <view class="fui-cell-group fui-cell-click">
-    <navigator class="fui-cell" hover-class="none" url="/pages/order/index">
+    <navigator class="fui-cell" hover-class="none" url="/pages/order/index?status=6">
       <image src="{{icons.cart}}" class="fui-cell-icon"></image>
       <view class="fui-cell-text">我的订单</view>
       <view class="fui-cell-remark">查看全部订单</view>
