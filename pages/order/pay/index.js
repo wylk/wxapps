@@ -13,7 +13,8 @@ Page({
     user_address: !1,
     is_ep: !1,
     user_address_list: !1,
-
+    eb_msg: '',
+    eb_html: '',
   },
   onLoad: function (e) {
     console.log(e);
@@ -58,6 +59,9 @@ Page({
     data.is_app = true;
     data.orderNo = this.data.order_no;
     data.appType = 'wxapp';
+    if (this.data.msg) {
+      data.msg = this.data.msg;
+    }
     e.post("order/saveorder", data, function (re) {
       wx.hideLoading();
       if (re.err_code == 0) {
@@ -73,21 +77,37 @@ Page({
   },//选择eb
   check_eb: function () {
     var tt = this,
-    is_ep = !tt.data.is_ep,
-    is_eb = !1,
-    total = parseFloat(tt.data.list.order.total),
-    order_id = tt.data.list.order.order_id,
-    eb = parseFloat(tt.data.list.user.point_unbalance / 100);
-    if (eb >= total){
+      is_ep = !tt.data.is_ep,
+      is_eb = !1,
+      total = parseFloat(tt.data.list.order.total),
+      order_id = tt.data.list.order.order_id,
+      eb = parseFloat(tt.data.list.user.point_unbalance / 100);
+    if (eb >= total) {
       is_eb = is_ep;
-    }else{
-      e.post("order/check_eb", {type: is_ep,eb:eb,order_id:order_id}, function (i) {
-
-    })
-    }
-    tt.setData({
-      is_ep:is_ep,
-      is_eb:is_eb
+    } else {
+      wx.showLoading({
+        title: '操作中',
+        mask: true
+      });
+      e.post("order/check_eb", { type: is_ep, eb: eb, order_id: order_id }, function (i) {
+        wx.hideLoading();
+        var html = '-' + i.eb_msg + 'E币';
+        tt.setData({
+          eb_msg: parseFloat(i.eb_msg),
+          eb_html: i.eb_msg ? html : '',
+          is_ep: is_ep,
+        })
       })
+    }
+    eb >= total && tt.setData({
+      is_ep: is_ep,
+      is_eb: is_eb
+    })
+  },
+  buy_msg: function (i) {
+    this.setData({ msg: i.detail.value });
+  },
+  hideModal: function(i){
+    this.setData({showModal:1})
   }
 })
