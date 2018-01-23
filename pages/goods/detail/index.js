@@ -383,23 +383,25 @@ Page({
     wx.navigateTo({
       url: "/pages/goods/region/index?id=" + e.data.goods.id + "&region=" + e.data.goods.citys
     })
-  },
+  },//购物弹框
   selectPicker: function (t) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     var a = this,
       o = t.currentTarget.dataset.tap,
       i = t.currentTarget.dataset.buytype;
-    "" == o && a.setData({
-      active: "active",
-      slider: "in",
-      tempname: "select-picker",
-      buyType: i
-    }),
       e.get("goods/info", {
         product_id: a.data.goods.product.product_id
       }, function (t) {
-        var msg = t.err_msg;
+        wx.hideLoading();
         a.setData({
-          pickerOption: msg
+          pickerOption: t.err_msg,
+          active: "active",
+          slider: "in",
+          tempname: "select-picker",
+          buyType: i
         });
       })
   },

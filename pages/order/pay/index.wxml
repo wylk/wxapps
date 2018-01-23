@@ -21,7 +21,7 @@
     <!--留言-->
     <block wx:if="{{list.order.status == 0}}">
       <view class='message'>
-        <textarea class='message-text' placeholder="买家留言....." name="textarea" />
+        <textarea class='message-text' bindblur="buy_msg" placeholder="买家留言....." name="textarea" />
       </view>
     </block>
     <block wx:else>
@@ -38,34 +38,37 @@
   <view class='block-express'>
     配送方式
     <span class="btn-express"> 快递配送 </span>
-    <view class="express-user">
-      <text>
+    <view class='bk-express flex-row'>
+      <view class="express-user">
+        <text>
       {{list.user_address.name}},{{list.user_address.tel}}
       {{list.user_address.province_txt}}\t{{list.user_address.city_txt}}\t{{list.user_address.area_txt}}\t
       {{list.user_address.address}}
       </text>
-    </view>
-    <view class='express-edit express-right'>
-      <block wx:if="{{list.user_address_list}}">
-        <button class='ex-btn' type="primary" plain="false">切换</button>
-
-        <!--<navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}" open-type="switchTab">-->
-        <navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}">
-          <button class='ex-btn' type="warn" plain="false">修改</button>
-        </navigator>
-      </block>
+      </view>
+      <view class='express-edit express-right'>
+        <block wx:if="{{list.user_address_list}}" class="">
+          <button class='ex-btn' bindtap="hideModal" type="primary" plain="false">切换</button>
+          <navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}">
+            <button class='ex-btn' type="warn" plain="false">修改</button>
+          </navigator>
+        </block>
+      </view>
     </view>
   </view>
   <view class='v-line'></view>
   <!--E币支付-->
-  <block >
-  <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1}}">
-  E币{{list.user.point_unbalance}} \t\t 可抵现{{list.user.point_unbalance/100}}  \t\t\t\t <view class='eb-pay-icon'><icon  type="{{is_eb?'success_circle':'circle'}}" size="30"/></view>
-  </view>
+  <block>
+    <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1}}">
+      E币{{list.user.point_unbalance}} \t\t 可抵现{{list.user.point_unbalance/100}} \t\t\t\t
+      <view class='eb-pay-icon'>
+        <icon type="{{is_ep?'success_circle':'circle'}}" size="30" bindtap='check_eb' />
+      </view>
+    </view>
   </block>
   <view class='v-line'></view>
   <view class='total-msg'>
-    <text>{{list.order.sub_total}} \t+\t ¥{{list.order.postage}}运费   \t\t\t需付:{{list.order.total}}
+    <text>{{list.order.sub_total}} \t+\t ¥{{list.order.postage}}运费 \t\t{{eb_html}}  \t\t\t需付:{{list.order.total - eb_msg}}
   </text>
 
   </view>
@@ -79,4 +82,14 @@
       <button class='ebpay' data-type="eb_pay" bindtap="pay">E币支付</button>
     </view>
   </view>
+
 </view>
+<!--收货地址切换-->
+
+<view class='fui-maskss' wx:if="{{showModal && show}}">233333333333333</view>
+<!--<view class="modal-dialog" wx:if="{{showModal && show}}">
+  <view class="modal-title">手机绑定</view>
+  <view class="modal-content">
+    6798
+  </view>
+</view>-->

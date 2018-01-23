@@ -3,14 +3,15 @@ var e = require("utils/core.js");
 App({
   onLaunch: function () {
     var e = this.getCache("userinfo");
-    e ||  this.getUserInfo(function (e) {}, function (e, t) {
+    this.url();
+    e || this.getUserInfo(function (e) { }, function (e, t) {
       var t = t ? 1 : 0;
       //页面重定向
       console.log(e.msg);
       t && this.setCache("userinfo", e.msg, 7200);
-     /* wx.redirectTo({
-        url: "/pages/message/auth/index?close=" + t + "&text=" + e
-      })*/
+      /* wx.redirectTo({
+         url: "/pages/message/auth/index?close=" + t + "&text=" + e
+       })*/
     })
   },
   requirejs: function (e) {
@@ -64,7 +65,7 @@ App({
           code: o.code
         }, function (o) {
 
-          return o.error  == 2 ? void e.alert("获取用户登录态失败:" + o.msg) : o.error == 0 ? void n.setCache("userinfo", o.msg, 7200) : void wx.getUserInfo({
+          return o.error == 2 ? void e.alert("获取用户登录态失败:" + o.msg) : o.error == 0 ? void n.setCache("userinfo", o.msg, 7200) : void wx.getUserInfo({
             success: function (i) {
               a = i.userInfo,
                 e.get("public/auth", {
