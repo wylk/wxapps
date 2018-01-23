@@ -28,7 +28,7 @@
   <view class="fui-cell-group fui-cell-click">
     <view class="fui-icon-group nomargin">
       <navigator hover-class="none" class="fui-icon-col" url="/pages/order/index?status=0">
-        <view class="badge" wx:if="{{member.store_user_data.order_unpay > 0}}">{{member.store_user_data.order_unpay}}</view>
+        <view class="badge" wx:if="{{member.store_user_data.unpay_count > 0}}">{{member.store_user_data.unpay_count}}</view>
         <view class="icon">
           <image src="{{icons.paying48}}"></image>
         </view>

@@ -79,7 +79,18 @@ Page({
   },
   cancel: function (t) {
     var s = a.data(t).orderid;
-    e.cancel(s, t.detail.value, "/pages/order/index?status=" + this.data.status)
+    console.log(s);
+    a.confirm("是否确认取消此订单?", function () {
+            a.post("order/cancel", {
+                del_id: s
+            }, function (t) {
+                if(t.err_code == 0){
+                    a.alert(t.msg);
+                }else{
+                    a.alert(t.msg);
+                }
+            });
+        });
   },
   delete: function (t) {
     var s = a.data(t).type,

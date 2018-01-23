@@ -18,9 +18,9 @@
               <text>{{item.order_no_txt}}</text>
             </view>
             <view class="statuscss" wx:if="{{item.status<2}}">
-              <navigator class="btn btn-default-o btn-cancel" url="">
+              <view bindtap="cancel" class="btn btn-default-o btn-cancel"  data-orderid="{{item.order_id}}">
                 取消
-              </navigator>
+              </view>
             </view>
           </view>
           <block wx:for="{{item.order_product_list}}" wx:for-index="key" wx:for-item="val">

@@ -8,7 +8,7 @@
   </view>
 <image class="shop_img" mode="{{mode}}" src="{{src}}"></image><text class="shop_text">{{text}}</text>
 
-  
+
 
     <view class="all">
       <text class="count">{{getShopMsg.product_count}}</text>
@@ -20,7 +20,7 @@
       <text class="all_product1">收藏我的</text>
       <text class="line1">|</text>
     </view>
-    <navigator url="/pages/goods/detail/index?id=1" class="all">
+    <navigator url="/pages/order/index?status=6" class="all" hover-class="none">
       <text class="count2">{{getShopMsg.order_count}}</text>
       <text class="all_product2">我的订单</text>
     </navigator>
