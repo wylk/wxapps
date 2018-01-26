@@ -8,7 +8,8 @@ Page({
     store: false,
     cancel: i.cancelArray,
     cancelindex: 0,
-    diyshow: {}
+    diyshow: {},
+    order: {}
 
   },
   onLoad: function (e) {
@@ -22,11 +23,18 @@ Page({
   },
   get_list: function () {
     var t = this;
+    //console.log(t.data.options);
     e.get("order/detail", t.data.options, function (i) {
-      0 == i.error ? (i.show = true, t.setData(i)) : (5e4 != i.error && e.toast(i.message, "loading"), wx.redirectTo({
+      //console.log(i);
+      // i.err_code ?
+      0 == i.err_code ? (i.show = true,i.order = i.err_msg, t.setData(i)) : (5e4 != i.err_code && e.toast(i.err_msg, "loading"), wx.redirectTo({
         url: "pages/order/index"
       }))
+      /*0 == i.err_code ? (i.show = true, t.setData(i.err_msg)) : (5e4 != i.err_code && e.toast(i.err_msg, "loading"), wx.redirectTo({
+        url: "pages/order/index"
+      }))*/
     })
+    console.log(t.data.order);
   },
   code: function (t) {
     var i = this,
@@ -43,10 +51,12 @@ Page({
   diyshow: function (t) {
     var i = this.data.diyshow,
       a = e.data(t).id;
+
     i[a] = !i[a],
       this.setData({
         diyshow: i
       })
+
   },
   close: function () {
     this.setData({

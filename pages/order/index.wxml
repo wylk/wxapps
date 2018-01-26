@@ -50,17 +50,18 @@
                 <navigator class="btn btn-danger" hover-class="none" url="/pages/goods/detail/index?id={{val.product_id}}"  wx:if="{{val.return_status != 0}}">
                   查看退货
                 </navigator>
-                <navigator class="btn btn-danger" hover-class="none" url="/pages/goods/detail/index?id={{val.product_id}}" wx:if="{{item.is_return  && val.return_status !='2' && val.is_present == '0'}}">
+                <!--<view class="btn btn-danger" bindtap="return_apply" data-id="{{val.pigcms_id}}" data-orderno="{{item.order_no_txt}}" wx:if="{{item.is_return  && val.return_status !='2' && val.is_present == '0'}}">-->
+                <navigator class="btn btn-danger" url="/pages/order/refund/index?id={{val.pigcms_id}}&orderno={{item.order_no_txt}}" wx:if="{{item.is_return  && val.return_status !='2' && val.is_present == '0'}}">
                   退货
                 </navigator>
-                <navigator class="btn btn-danger" hover-class="none" url="/pages/goods/detail/index?id={{val.product_id}}" wx:if="{{item.is_rights  && val.rights_status !='2' && val.is_present == '0'}}">
+                <!--<navigator class="btn btn-danger" hover-class="none" url="/pages/goods/detail/index?id={{val.product_id}}" wx:if="{{item.is_rights  && val.rights_status !='2' && val.is_present == '0'}}">
                   维权
                 </navigator>
                  <navigator class="btn btn-danger" hover-class="none" url="/pages/goods/detail/index?id={{val.product_id}}" wx:if="{{val.rights_status!='0'}}">
                   查看维权
-                </navigator>
+                </navigator>-->
                 </view>
-
+              </block>
           <view class="fui-list list-padding">
             <text class="fui-list-inner text-right totle">
               <text>共</text>
@@ -71,6 +72,7 @@
                 <text>{{item.total}}</text>
               </text>
             </text>
+
             <view bindtap="finish" class="btn btn-default btn-default-o" data-orderid="{{item.id}}" wx:if="{{item.status == '3'}}">
                 确认收货
             </view>
@@ -80,25 +82,17 @@
               </navigator>
             </block>
             <block wx:else>
-              <view wx:if="{{item.status == 4 || item.status == 7 || val.return_status == '0'}}">
-                  <view wx:if="{{item.commentss == 1}}">
-                    <text>已评价</text>
-                  </view>
-                  <view wx:else>
-                    <navigator class="btn btn-primary btn-primary-o" url="/pages/order/comment/index?id={{item.id}}">
-                      评价
-                    </navigator>
-                  </view>
-              </view>
-              <navigator class="btn btn-success btn-success-o" url="/pages/order/comment/index?id={{item.id}}">
+              <navigator hover-class="none" class="btn btn-primary btn-primary-o" url="/pages/order/detail/index?id={{item.order_no_txt}}">
                 详情
               </navigator>
+          <block wx:for="{{item.order_product_list}}" wx:for-index="key" wx:for-item="val">
               <navigator class="btn btn-default" url="/pages/order/comment/index?id={{item.id}}" wx:if="{{item.status == 7 && val.return_status == '0'}}">
                 交易完成
               </navigator>
             </block>
-          </view>
-        </block>
+          </block>
+        </view>
+
         <!--</navigator>-->
       </view>
     </block>

@@ -1877,13 +1877,13 @@
   color: red;
   font-size: 60rpx;
   height: 30rpx;
-  width: 30rpx;
+  width: 35rpx;
   line-height: 30rpx;
 }
 
 .fui-images.fui-images-sm .image.image-sm {
-  width: 60rpx;
-  height: 60rpx;
+  width: 80rpx;
+  height: 80rpx;
 }
 
 .fui-images.fui-images-sm .image.image-sm.long {

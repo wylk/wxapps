@@ -20,6 +20,20 @@ Page({
       t.url(a),
       this.get_list()
   },
+  return_apply: function(t){
+    var that = this;
+    var pigcms_id = a.data(t).id;
+    var order_no = a.data(t).orderno;
+    console.log(pigcms_id);
+    console.log(order_no);
+    a.get('order/return_apply',{pigcms_id:pigcms_id,order_no:order_no},function(res){
+        if(res.err_code == 0){
+          console.log(res.err_msg)
+        }else{
+          console.log(res.err_msg);
+        }
+    })
+  },
   get_list: function () {
     var t = this;
     t.setData({
@@ -78,16 +92,47 @@ Page({
     })
   },
   cancel: function (t) {
+    var that = this;
     var s = a.data(t).orderid;
     console.log(s);
+    console.log(this.data.status);
+    // return;
     a.confirm("是否确认取消此订单?", function () {
             a.post("order/cancel", {
                 del_id: s
             }, function (t) {
                 if(t.err_code == 0){
-                    a.alert(t.msg);
+                  wx.showModal({
+                  title: '提示',
+                  content: t.err_msg,
+                  showCancel: false,
+                  success: function(res) {
+                    if (res.confirm) {
+                         wx.navigateTo({
+                          url: '/pages/order/index?status='+that.data.status
+                        })
+                    }
+                  }
+                })
+                   /* a.alert(t.err_msg,function(){
+                       wx.navigateTo({
+                        url: '/pages/order/index?status='+that.data.status
+                      })
+                    });*/
+
                 }else{
-                    a.alert(t.msg);
+                    wx.showModal({
+                    title: '提示',
+                    content: t.err_msg,
+                    showCancel: false,
+                    success: function(res) {
+                      if (res.confirm) {
+                           wx.navigateTo({
+                            url: '/pages/order/index?status='+that.data.status
+                          })
+                      }
+                    }
+                  })
                 }
             });
         });
