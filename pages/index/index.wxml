@@ -20,7 +20,7 @@
       </view>
       <view class='content-title'>
         {{getShopMsg.order_count}}
-        <navigator url="/pages/goods/detail/index?id=1" class="all">
+        <navigator url="/pages/order/index?status=6" class="all">
           <view>我的订单</view>
         </navigator>
       </view>
