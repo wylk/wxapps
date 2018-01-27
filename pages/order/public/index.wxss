@@ -1,0 +1,46 @@
+.box_all_view{
+    width:100%;
+    font:12px/1.5 "微软雅黑";
+    color:#000;
+  }
+.box_all_view .text{
+  text-align:center;
+}
+.box_all_view .pay_text{
+  text-align:left;
+  margin-top:15px;
+  font-size:15px;
+  margin-left: 8px;
+}
+.box_succ{
+  background-color:rgba(245,245,245,.5);
+  padding:5px 0;
+  height:40px;
+  line-height: 40px;
+  font-size: 18px;
+}
+.box_show{
+  float:left;
+  border-top:1px solid #F5F5F5;
+  border-bottom:1px solid #F5F5F5;
+  width:100%;
+}
+.text-1 span{
+  color:#3CB371;
+}
+.check_text{
+   margin-top:50px;
+}
+.box_check{
+  clear:both;
+  border:1px solid #fff;
+}
+.echeck_text_btn{
+  width: 70%;
+  height:30px;
+  line-height: 30px;
+ 
+}
+.over_text{ 
+  margin-top:15px;
+}

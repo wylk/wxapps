@@ -1,67 +1,59 @@
-.bc_green{
-    height:100px;background-color:#6DABEB;
+.header{
+  border-bottom: 1px solid #DCDCDC;
+  height:175px;
 }
-.shop_img{
-    width: 80px; height: 80px; background-color: #eeeeee;margin-top:-40px;margin-left:10px;
-    border-radius: 3px;
+.header-back-img{
+  height:112px;
+  width: 100%;
+  background-image:url(https://pic.mall.epaikj.com/images/000/000/110/201801/5a571c7702aa5.jpg 
+);
+position: relative;
+background-repeat: no-repeat;
+background-position-x: center;
+background-size: cover;
+display: flex;
+justify-content:flex-end;
+align-items:flex-end;
 }
-.shop_text{
-    position: relative;
-    top:-40px;
-    left:10px;
-    color:white;
+.header-store-name{
+  width: 68%;
+  height:45px;
+  line-height: 45px;
+  color:white;
+  font-family: '楷体';
+  font-size:20px;
+  font-weight: bold;
 }
-.all > text{
-    display: block;
-    text-align: center;
-    margin-left:-66px;
-    margin-top:-18px;
+.shop-logo{
+  width: 27%;
+  height: 95px;
+  position: absolute;
+  left: 10px;
+  top: 65px;
 }
-.count{
-    position: relative;
-    top:-18px;
-    left:-1px;
+.shop-logo image{
+  width:100%;
+  height:100%;
+  border-radius:8%;
 }
-.all_product{
-    color: #999;
-    font-size:12px;
+.header-content{
+  height:60px;
+  display: flex;
+  justify-content:flex-end;
+  align-items:center;
 }
-.line{
-    position:relative;
-    top:-7px;
-    left:36px;
-    color:#ccc;
+.content-title{
+  height:40px;
+  line-height: 20px;
+  width:22%;
+  text-align: center;
+  font-family: '楷体';
+  font-size: 16px;
 }
-.count1{
-    position: relative;
-    top:-22px;
-    left:80px;
+.content-title-lin{
+  border-right: 1px solid #DCDCDC;
 }
-.all_product1{
-    position: relative;
-    top:-4px;
-    left:80px;
-    color: #999;
-    font-size:12px;
-}
-.line1{
-    position:relative;
-    top:-8px;
-    left:122px;
-    color:#ccc;
-}
-.count2{
-    position: relative;
-    top:-25px;
-    left:160px;
-}
-.all_product2{
-    position: relative;
-    top:-4px;
-    left:160px;
-    color: #999;
-    font-size:12px;
-}
+
 @font-face {
   font-family: 'iconfont';  /* project id 534646 */
   src: url('//at.alicdn.com/t/font_534646_ygfhp9om3z93sor.eot');

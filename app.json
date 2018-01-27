@@ -1,5 +1,8 @@
 {
   "pages": [
+    
+    "pages/public/coupon/index",
+    "pages/order/public/index",
     "pages/index/index",
     "pages/commission/index",
     "pages/commission/log/index",
@@ -42,7 +45,6 @@
     "pages/sale/coupon/my/detail/index",
     "pages/sale/coupon/my/index/index",
     "pages/sale/coupon/my/showcoupons2/index",
-    "pages/public/coupon/index",
     "pages/message/auth/index",
     "pages/test/test/index"
   ],
