@@ -53,8 +53,8 @@ Page({
     var postData = {phone:s.detail.value.phone};
     postData.content = s.detail.value.content;
     postData.pigcms_id = t.data.pigcms_id;
-    postData.type = t.data.indx;
-    postData.number = t.data.index;
+    postData.type = t.data.indx+1;
+    postData.number = t.data.index+1;
     postData.images = t.data.imgs;
     postData.order_no = t.data.order_no;
     postData.sign = 1;
@@ -104,6 +104,7 @@ Page({
     this.setData({
       indx: e.detail.value
     })
+
   },
   upload1: function(v){
     var a = this,
@@ -127,8 +128,9 @@ Page({
             'mid': u.mid
           },
           success: function(res){
-            var data = res.data
-            console.log(typeof data);
+            var data = res.data;
+            console.log(data);
+            // console.log(typeof data);
             var obj = JSON.parse(data);
             console.log(obj.err_msg.file);
             data.err_code ? (e.toast(obj.err_msg, "loading"), wx.redirectTo({
