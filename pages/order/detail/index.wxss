@@ -1,3 +1,7 @@
+.remark{
+  color:#bbb;
+  font-size:15px;
+}
 .fui-number {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;

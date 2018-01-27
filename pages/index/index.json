@@ -2,5 +2,6 @@
   "backgroundColor": "#ffffff",
   "navigationBarBackgroundColor": "#000000",
   "navigationBarTextStyle": "white",
-  "backgroundTextStyle": "dark"
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "商城首页"
 }
