@@ -60,7 +60,7 @@
   <!--E币支付-->
   <block>
     <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1}}">
-      E币{{list.user.point_unbalance}} \t\t 可抵现{{list.user.point_unbalance/100}} \t\t\t\t
+      E币{{list.user.point_unbalance}} \t\t 可抵现¥{{list.user.point_unbalance/100}} \t\t\t\t
       <view class='eb-pay-icon'>
         <icon type="{{is_ep?'success_circle':'circle'}}" size="30" bindtap='check_eb' />
       </view>
@@ -82,14 +82,32 @@
       <button class='ebpay' data-type="eb_pay" bindtap="pay">E币支付</button>
     </view>
   </view>
-
 </view>
-<!--收货地址切换-->
+<!--地址切换-->
+<modal title="地址切换" hidden="{{showModalStatus}}" confirm-text="确定" cancel-text="取消" bindconfirm="listenerConfirm" bindcancel="listenerCancel">
+  <radio-group class="radio-group" bindchange="radioChange">
+    <block wx:for="{{list.user_address_list}}">
+      <view>
+        <radio value="{{item.address_id}}" checked="{{item.default}}" />\t\t {{item.name}}\t\t{{item.tel}} {{item.province_txt}}{{item.city_txt}}{{item.area_txt}}{{item.address}}
+      </view>
+    </block>
+  </radio-group>
+</modal>
 
-<view class='fui-maskss' wx:if="{{showModal && show}}">233333333333333</view>
-<!--<view class="modal-dialog" wx:if="{{showModal && show}}">
-  <view class="modal-title">手机绑定</view>
-  <view class="modal-content">
-    6798
+<!--添加支付密码-->
+<modal title="添加支付密码" hidden="{{showModalAddPass}}" confirm-text="确定" cancel-text="取消" bindconfirm="addPassword" bindcancel="listenerCancel">
+  <view class="section">
+    <input class="input input-pass" password placeholder="请输入密码" bindinput="passWdInput" maxlength="6" id='pas1' />
   </view>
-</view>-->
+  <view class="section">
+    <input class="input input-pass" password placeholder="请再次输入密码" bindinput="passWdInput" maxlength="6" id='pas2' />
+  </view>
+</modal>
+
+<!--e币支付-->
+<modal title="E币支付" hidden="{{showModalAddEbPay}}" confirm-text="确定" cancel-text="取消" bindconfirm="eb_pay_pass" bindcancel="listenerCancel">
+ <view class='eb-pay-title'>使用E币\t\t {{eb_data_price}}</view>
+  <view class="section">
+    <input class="input input-pass" password placeholder="请输入支付密码" bindinput="password_pay" maxlength="6" id='pas' />
+  </view>
+</modal>

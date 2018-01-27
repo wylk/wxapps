@@ -15,6 +15,10 @@ Page({
     user_address_list: !1,
     eb_msg: '',
     eb_html: '',
+    showModalStatus: 1,
+    showModalAddPass: 1,
+    showModalAddEbPay: 1,
+    pass: {},
   },
   onLoad: function (e) {
     console.log(e);
@@ -52,26 +56,47 @@ Page({
       title: '操作中',
       mask: true
     });
+    var tt = this;
     var data = {}
     data.payType = e.pdata(t).type;
-    data.address_id = this.data.list.user_address.address_id;
-    data.postage_list = this.data.list.postage_list;
+    data.address_id = tt.data.list.user_address.address_id;
+    data.postage_list = tt.data.list.postage_list;
     data.is_app = true;
-    data.orderNo = this.data.order_no;
+    data.orderNo = tt.data.order_no;
     data.appType = 'wxapp';
-    if (this.data.msg) {
-      data.msg = this.data.msg;
-    }
-    e.post("order/saveorder", data, function (re) {
+    if (tt.data.msg) {
+      data.msg = tt.data.msg;
+    }//order
+    e.post("test/saveorder", data, function (re) {
       wx.hideLoading();
-      if (re.err_code == 0) {
-        console.log(re);
-        e.pay(re.err_msg, function (t) {
-          console.log(t);
-          "requestPayment:ok" == t.errMsg && console.log('支付成功。。。');
-        }, function (e) {
-          console.log(e);
-        })
+      console.log(re);
+      //微信支付
+      if (data.payType == 'weixin') {
+        if (re.err_code == 0) {
+          e.pay(re.err_msg, function (t) {
+            console.log(t);
+            "requestPayment:ok" == t.errMsg && console.log('支付成功。。。');
+          }, function (e) {
+            console.log(e);
+          })
+        }
+      } else {
+        //E币支付
+        if (re.error == '2') {
+          tt.setData({
+            showModalAddPass: !1,
+          });
+
+        } else if (re.error == 0) {
+          var eb_data_price = (re.data.pay_money * 100).toFixed(2);
+          tt.setData({
+            showModalAddEbPay: !1,
+            eb_data: re.data,
+            eb_data_price: eb_data_price
+          })
+        } else {
+
+        }
       }
     })
   },//选择eb
@@ -93,7 +118,7 @@ Page({
         wx.hideLoading();
         var html = '-' + i.eb_msg + 'E币';
         tt.setData({
-          eb_msg: parseFloat(i.eb_msg),
+          eb_msg: parseFloat(i.eb_msg).toFixed(2),
           eb_html: i.eb_msg ? html : '',
           is_ep: is_ep,
         })
@@ -107,7 +132,105 @@ Page({
   buy_msg: function (i) {
     this.setData({ msg: i.detail.value });
   },
-  hideModal: function(i){
-    this.setData({showModal:1})
-  }
+  hideModal: function (i) {
+    // 显示遮罩层
+    this.setData({ showModalStatus: false });
+  },
+  listenerCancel: function () {
+    this.setData({
+      showModalStatus: true,
+      showModalAddPass: true,
+      showModalAddEbPay: true,
+    })
+  },
+  listenerConfirm: function () {
+
+    var tt = this;
+    var address_id = tt.data.address_id;
+    !address_id || wx.showLoading({
+      title: '操作中',
+      mask: true
+    });
+    !address_id || e.post('cart/default_address', { address_id: address_id }, function (i) {
+      if (i.err_code == '0') {
+        tt.get_list();
+        setTimeout(function () {
+          tt.setData({
+            showModalStatus: true
+          });
+          wx.hideLoading();
+        }, 3000)
+
+
+      }
+    });
+  },
+  radioChange: function (e) {
+    this.setData({
+      address_id: e.detail.value
+    })
+  },
+  passWdInput: function (i) {
+    this.data.pass[i.target.id] = i.detail.value;
+  },
+  addPassword: function (i) {
+
+    var data = this.data.pass;
+    var pas1 = data.pas1,
+      tt = this,
+      pas2 = data.pas2;
+    if (parseInt(pas1.length) < 5) {
+      e.alert('密码不能少于6位'); return;
+    }
+    if (pas2 != pas1) {
+      e.alert('两次密码不一致'); return;
+    }
+    wx.showLoading({
+      title: '操作中',
+      mask: true
+    });
+    e.post('test/editPassword', { password: pas1 }, function (re) {
+      wx.hideLoading();
+      tt.setData({
+        showModalAddPass: 1,
+      })
+    });
+  },
+  password_pay:function(i){
+    this.setData({
+      pay_password: i.detail.value
+    })
+  },
+  eb_pay_pass: function(){
+    var data = this.data.eb_data,
+        password = this.data.pay_password;
+    if (parseInt(password.length) < 5) {
+      e.alert('密码不对'); return;
+    }
+    wx.showLoading({
+      title: '操作中',
+      mask: true
+    });
+    data.pay_password = password;
+    e.post('test/eb_pay',data,function(re){
+      wx.hideLoading();
+      if(re.error == 0){
+        wx.showToast({
+          title: re.msg,
+          icon: 'succes',
+          duration: 1000,
+          mask: true
+        })
+        setTimeout(function(){
+          wx.hideToast()
+          wx.navigateTo({
+            url: "/pages/order/public/index?orderno=" + re.orderno
+          })
+        },2000)
+      }else{
+        e.alert(re.msg);
+      }
+      console.log(re);
+    })
+  },
 })

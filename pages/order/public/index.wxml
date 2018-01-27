@@ -1,0 +1,20 @@
+<loading hidden="{{show}}">正在加载</loading>
+<view class="box_all_view" wx:if="{{show}}">
+  <view class="box_succ">
+    
+    <view class="succ_text text"><icon type="{{success ? 'success_circle' : 'circle'}}" size="18"/>\t\t订单支付成功</view>
+  </view>
+  <view class="box_pay">
+    <view class="pay_text text">您的支付信息</view>
+  </view>
+  <view class="box_show">
+    <view class="pay_text text-1">付款金额：<span>¥{{order.total}}</span></view>
+    <view class="pay_text text">订单编号：WJ{{order.order_no}}</view>
+    <view class="pay_text text">支付方式：{{order.pay_type_txt}}</view>
+  </view>
+  <view class="box_check">
+    <view class="check_text" text><button bindtap="toast" class='echeck_text_btn'  plain="true">查看订单详情</button></view>
+  </view>
+
+  <view class="over_text text">支付完成后，如需退换货请及时联系卖家</view>
+</view>
