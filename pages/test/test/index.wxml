@@ -15,7 +15,7 @@
           <view class="weui-cell weui-cell_input">
             <view class="weui-cell__bd">
               <label>联系电话</label>
-              <input  class="weui-input" name="tel" placeholder="输入联系电话" type="number" value="{{tel}}"/>
+              <input  class="weui-input" maxlength="11" name="tel" placeholder="输入联系电话" type="number" value="{{tel}}"/>
             </view>
           </view>
         </view>

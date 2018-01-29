@@ -16,10 +16,11 @@ Page({
   },
   getList: function () {
     var t = this;
-    e.get("member/address/get_list", {}, function (e) {
+    e.get("address/all", {}, function (e) {
+      console.log(e);
       t.setData({
         loaded: !0,
-        list: e.list,
+        list: e.err_msg,
         show: !0
       })
     })
@@ -27,28 +28,40 @@ Page({
   setDefault: function (t) {
     var s = this,
       i = e.pdata(t).id;
+
     s.setData({
       loaded: !1
     }),
-      e.get("member/address/set_default", {
-        id: i
+      e.get("address/set_default", {
+        address_id: i
       }, function (t) {
-        e.toast("设置成功"),
-          s.getList()
+        if(t.err_code == 0){
+          e.toast(t.err_msg),
+            s.getList()
+        }else{
+          e.toast(t.err_msg),
+           s.getList()
+        }
       })
   },
   deleteItem: function (t) {
     var s = this,
       i = e.pdata(t).id;
+    console.log(i);
     e.confirm("删除后无法恢复, 确认要删除吗 ?", function () {
       s.setData({
         loaded: !1
       }),
-        e.get("member/address/delete", {
-          id: i
+        e.get("address/delete", {
+          address_id: i
         }, function (t) {
-          e.toast("删除成功"),
-            s.getList()
+          if(t.err_code == 0){
+            e.toast(t.err_msg),
+              s.getList()
+          }else{
+             e.toast(t.err_msg),
+              s.getList()
+          }
         })
     })
   }

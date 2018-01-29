@@ -1,0 +1,170 @@
+<loading hidden="{{show}}">正在加载</loading>
+<!--<import src="/pages/common/diyform_view.wxml" />-->
+<view class="page navbar" wx:if="{{show}}">
+  <view class="fui-list bg">
+    <view class="fui-list-inner">
+      <view class="row">
+        <view class="">申请退货状态:{{return.status_txt}}</view>
+      </view>
+    </view>
+    <view class="">
+      <image class="round image-88" src="/static/images/icon-white/money.png"></image>
+    </view>
+  </view>
+  <view class="fui-list-group">
+    <view class="fui-list-group-title">
+      <image src="/static/images/icon/shop.png" class="round"></image>
+      <text class="shop">退货商品信息</text>
+    </view>
+    <block wx:if="{{return}}">
+      <navigator open-type="redirect" class="fui-list goods-item" url="/pages/goods/detail/index?id={{return.product_id}}">
+        <view class="fui-list-media">
+          <image src="{{return.image}}" class="round goods_img"></image>
+        </view>
+        <view class="fui-list-inner">
+          <view class="text">{{return.name}}</view>
+          <view class="subtitle" wx:for="{{sku_data_arr}}" wx:for-item="sku">
+            {{sku.name}}：{{sku.value}}
+          </view>
+        </view>
+        <view class="price text-right">
+          <view class="text-right">￥
+            <text>{{return.pro_price}}</text>
+          </view>
+          <view class="text-right">x
+            <text>{{return.pro_num}}</text>
+          </view>
+        </view>
+        <view class="price text-right"  wx:if="{{return.discount && return.discount!=10}}">
+          <view class="text-right">￥
+            <text>{{return.discount}}折</text>
+          </view>
+          <view class="text-right">x
+            <text>{{return.pro_num}}</text>
+          </view>
+        </view>
+      </navigator>
+        <view class="fui-list-group-title">
+          <image src="/static/images/icon/shop.png" class="round"></image>
+          <text class="shop">申请退货信息</text>
+        </view>
+         <view class="fui-cell-group">
+          <view class="order-info">
+            <view class="fui-cell-label">申请时间：
+              <text class="fui-cell-label">{{return.dateline}}</text>
+            </view>
+            <view class="fui-cell-label">退货类型：
+              <text class="fui-cell-label">{{return.type_txt}}</text>
+            </view>
+            <view class="fui-cell-label" wx:if="{{return.phone}}">手机号码：
+              <text class="fui-cell-label">{{return.phone}}</text>
+            </view>
+            <view class="fui-cell-label" wx:if="{{return.content}}">退货理由：
+              <text class="fui-cell-label">{{return.content}}</text>
+            </view>
+            <view class="fui-cell-label img" wx:if="{{return.images}}">上传图片
+                <view wx:for="{{return.images}}" class="fui-cell-label">
+                  <image src="{{item}}" style="width: 50px; height: 50px;" class="img"></image>
+                </view>
+            </view>
+          </view>
+        </view>
+    </block>
+    <!--商家回复信息-->
+  <view wx:if="{{return.status != 1 && return.status != 6}}">
+   <view class="fui-list-group-title">
+        <image src="/static/images/icon/shop.png" class="round"></image>
+          <text class="shop">商家审核信息</text>
+      </view>
+    <block wx:if="{{return.status == 2}}">
+      <view>不同意退货时间：{{return.cancel_dateline}}</view>
+       <view>不同意退货理由：{{return.store_content}}</view>
+    </block>
+    <block wx:else>
+      <view class="fui-cell-group">
+          <view class="order-info">
+           <view class="fui-cell-label">退款总费用：
+                <text class="fui-cell-label">￥{{return.total_money}}=产品金额：{{return.product_money}} + 物流金额：{{return.postage_money}}</text>
+            </view>
+           <view class="fui-cell-label" wx:if="{{return.platform_point > 0}}">退还：
+                <text class="fui-cell-label">{{return.credit_name}}: {{return.platform_point}}</text>
+          </view>
+          <view wx:if="{{return.address}}">
+            <view class="fui-cell-label">收货人姓名：
+              <text class="fui-cell-label">{{return.address_user}}</text>
+            </view>
+            <view class="fui-cell-label">收货人电话：
+              <text class="fui-cell-label">{{return.address_tel}}</text>
+            </view>
+            <view class="fui-cell-label">收货人地址：
+              <text class="fui-cell-label">{{return.province_txt}}{{return.city_txt}}{{return.area_txt}}{{return.address_txt}}</text>
+            </view>
+
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:if="{{return.status == 3 && return.express_no == NULL && return.address}}">
+      <view class="fui-list-group-title">
+        <image src="/static/images/icon/shop.png" class="round"></image>
+          <text class="shop">物流信息</text>
+      </view>
+      <view class="fui-cell" hover-class="none">
+        <view class="fui-cell-group">
+          <view class="order-info express">
+            <view class="fui-cell-label">
+              快递公司
+            </view>
+            <view class="fui-cell-info">
+              <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+                   {{array[index]}}
+              </picker>
+            </view>
+
+      </view>
+      <form bindsubmit="formSubmit">
+          <view class="fui-cell" hover-class="none">
+            <view class="fui-cell-label">
+              快递单号
+            </view>
+            <view class="fui-cell-info">
+              <input type="number" name="express_no" maxlength="18" placeholder="填写请填写快递单号" focus="true" />
+            </view>
+          </view>
+          <button formType="submit" class="btn btn-success">提交</button>
+      </form>
+      </view>
+    </view>
+  </block>
+    <block wx:elif="{{return.express_no}}">
+      <view class="fui-list-group-title">
+        <image src="/static/images/icon/shop.png" class="round"></image>
+          <text class="shop">物流信息</text>
+      </view>
+      <view class="fui-cell-group">
+        <view class="order-info">
+          <view class="fui-cell-label">快递公司：
+            <text class="fui-cell-label">{{return.express_company}}</text>
+          </view>
+          <view class="fui-cell-label">快递单号：
+            <text class="fui-cell-label">{{return.express_no}}</text>
+          </view>
+          <view class="fui-cell-label">物流信息：
+            <navigator url="" hover-class="navigator-hover">点击查看物流信息</navigator>
+          </view>
+        </view>
+      </view>
+    </block>
+    <!--其他退换货-->
+    <view wx:if="{{return_list.length>0}}">
+      <view class="fui-list-group-title">
+        <image src="/static/images/icon/shop.png" class="round"></image>
+          <text class="shop">此商品的其它退货</text>
+      </view>
+      <view wx:for="{{return_list}}">
+        <navigator url="">{{item.dateline}}的退货，退货状态：{{item.status_txt}}</navigator>
+      </view>
+    </view>
+  </view>
+</view>
+</view>

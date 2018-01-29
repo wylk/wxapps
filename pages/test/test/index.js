@@ -205,7 +205,7 @@ Page({
           return;
         }
     });
-    console.log('初始化完成');    
+    console.log('初始化完成');
 
   },
   formSubmit: function(e) {
@@ -267,7 +267,20 @@ Page({
            icon: 'success',
            duration: 2000
          })
+         /* wx.showModal({
+          title: '提示',
+          content: '添加成功',
+          showCancel: false,
+          success: function(re) {
+            if (re.confirm) {
+                 wx.navigateTo({
+                  url: '/pages/member/address/index
+                })
+            }
+          }
+        })*/
         }
+
     })
 
   },

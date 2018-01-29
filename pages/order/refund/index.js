@@ -18,8 +18,13 @@ Page({
     type_arr: [],
     indx:4,
     pigcms_id: '',
-    order_no: ''
-
+    order_no: '',
+    return_id: ''
+  },
+  return_detail: function (e){
+      wx.navigateTo({
+        url: '/pages/order/refund_detail/index'
+    })
   },
   formSubmit: function(s) {
     var t = this;
@@ -53,8 +58,8 @@ Page({
     var postData = {phone:s.detail.value.phone};
     postData.content = s.detail.value.content;
     postData.pigcms_id = t.data.pigcms_id;
-    postData.type = t.data.indx+1;
-    postData.number = t.data.index+1;
+    postData.type = t.data.indx;
+    postData.number = t.data.index;
     postData.images = t.data.imgs;
     postData.order_no = t.data.order_no;
     postData.sign = 1;
@@ -64,32 +69,35 @@ Page({
       console.log(res);
       if(res.err_code == 0){
         console.log(res.err_msg);
-       /* wx.showModal({
+        t.setData({
+          return_id: res.err_dom
+        })
+        wx.showModal({
           title: '提示',
           content: res.err_msg,
           showCancel: false,
           success: function(re) {
             if (re.confirm) {
                  wx.navigateTo({
-                  url: '/pages/order/index?status='+that.data.status
+                  url: '/pages/order/refund_detail/index?pigcms_id='+t.data.pigcms_id+'&order_no='+t.data.order_no
                 })
             }
           }
-        })*/
+        })
       }else{
         console.log(res.err_msg);
-       /* wx.showModal({
+        wx.showModal({
           title: '提示',
           content: res.err_msg,
           showCancel: false,
           success: function(re) {
             if (re.confirm) {
                  wx.navigateTo({
-                  url: '/pages/order/index?status='+that.data.status
+                  url: '/pages/order/refund_detail/index?pigcms_id='+t.data.pigcms_id+'&order_no='+t.data.order_no
                 })
             }
           }
-        })*/
+        })
       }
     })
   },

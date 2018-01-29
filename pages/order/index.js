@@ -142,9 +142,85 @@ Page({
       i = a.data(t).orderid;
     e.delete(i, s, "/pages/order/index", this)
   },
+  // 确认收货
   finish: function (t) {
+    var that = this;
     var s = (a.data(t).type, a.data(t).orderid);
-    e.finish(s, "/pages/order/index")
+    console.log(s);
+    console.log(that.data.status);
+
+    // return;
+    a.post('order/receive',{order_no: s},function(res){
+      console.log(res);
+      if(res.err_code == 0){
+           wx.showModal({
+            title: '提示',
+            content: res.err_msg,
+            showCancel: false,
+            success: function(re) {
+              if (re.confirm) {
+                   wx.navigateTo({
+                    url: '/pages/order/index?status='+that.data.status
+                  })
+              }
+            }
+          })
+      }else{
+         wx.showModal({
+                  title: '提示',
+                  content: t.err_msg,
+                  showCancel: false,
+                  success: function(re) {
+                    if (re.confirm) {
+                         wx.navigateTo({
+                          url: '/pages/order/index?status='+that.data.status
+                        })
+                    }
+                  }
+                })
+      }
+    })
+    // e.finish(s, "/pages/order/index")
+  },
+  //订单交易完成
+  complete: function (t) {
+    var that = this;
+    var s = (a.data(t).type, a.data(t).orderid);
+    console.log(s);
+    console.log(that.data.status);
+
+    // return;
+    a.post('order/complete',{order_no: s},function(res){
+      console.log(res);
+      if(res.err_code == 0){
+           wx.showModal({
+            title: '提示',
+            content: res.err_msg,
+            showCancel: false,
+            success: function(re) {
+              if (re.confirm) {
+                   wx.navigateTo({
+                    url: '/pages/order/index?status='+that.data.status
+                  })
+              }
+            }
+          })
+      }else{
+         wx.showModal({
+                  title: '提示',
+                  content: t.err_msg,
+                  showCancel: false,
+                  success: function(re) {
+                    if (re.confirm) {
+                         wx.navigateTo({
+                          url: '/pages/order/index?status='+that.data.status
+                        })
+                    }
+                  }
+                })
+      }
+    })
+    // e.finish(s, "/pages/order/index")
   },
   onShareAppMessage: function () {
     return a.onShareAppMessage()
