@@ -1,120 +1,125 @@
 var t = getApp(),
-  e = t.requirejs("core"),
-  a = t.requirejs("foxui"),
-  i = t.requirejs("biz/diyform"),
-  n = t.requirejs("jquery");
+  e = t.requirejs("core");
 Page({
   data: {
     icons: t.requirejs("icons"),
     member: {},
-    diyform: {},
-    postData: {},
-    openbind: false,
-    index: 0,
-    submit: false,
-    showPicker: false,
-    pvalOld: [0, 0, 0],
-    pval: [0, 0, 0],
-    areas: [],
-    noArea: true
+    showModalPassword: 1,
+    time: '获取验证码',
+    currentTime:60,
+    inputData:{},
+    disabled: !1,
+    pass: '',
   },
   onLoad: function (e) {
-    this.setData({
-      areas: t.getCache("cacheset").areas
-    }),
-      t.url(e)
   },
   onShow: function () {
     this.getInfo()
   },
   getInfo: function () {
     var t = this;
-    e.get("member/info", {}, function (e) {
-      var a = e.member,
+    e.get("public/userinfo", {}, function (e) {
+      var a = e.msg,
         i = {
           member: a,
-          diyform: e.diyform,
-          openbind: e.openbind,
           show: true
         };
-      0 == e.diyform.template_flag && (i.postData = {
-        realname: a.realname,
-        mobile: a.mobile,
-        weixin: a.weixin,
-        birthday: a.birthday,
-        city: a.city
-      }),
-        t.setData(i)
+      t.setData(i)
     })
   },
-  onChange: function (t) {
-    var a = t.detail.value,
-      i = e.pdata(t).type,
-      r = this.data.postData;
-    r[i] = n.trim(a),
-      this.setData({
-        postData: r
-      })
+  listenerCancel: function () {
+    this.setData({
+      showModalPassword: 1
+    })
   },
-  DiyFormHandler: function (t) {
-    return i.DiyFormHandler(this, t)
+  deitPassword: function (i) {
+    clearInterval(this.data.interval);
+    this.setData({
+      showModalPassword: !1,
+      passType : i.target.id,
+      pass: '',
+      time: '获取验证码',
+      currentTime:60,
+      code:!1,
+      disabled: !1,
+    })
   },
-  submit: function () {
-    if (!this.data.submit) {
-      var t = this,
-        r = t.data,
-        o = r.diyform;
-      if (0 == o.template_flag) {
-        if (!r.postData.realname)
-          return void a.toast(t, "请填写姓名");
-        if (!n.isMobile(r.postData.mobile) && !r.openbind)
-          return void a.toast(t, "请填写正确手机号码")
-      } else {
-        if (!i.verify(this, o))
-          return
-      }
-      t.setData({
-        submit: true
-      });
-      var s = {
-        memberdata: r.postData
-      };
-      o.template_flag && (s.memberdata = o.f_data),
-        e.post("member/info/submit", s, function (e) {
-          if (0 != e.error)
-            return void a.toast(t, e.message);
-          t.setData({
-            submit: false
-          }),
-            a.toast(t, "修改成功"),
-            setTimeout(function () {
-              wx.navigateBack()
-            }, 500)
+  getCode: function (){
+    var tt = this,
+      tel = tt.data.member.phone;
+    tt.data.disabled || e.get('public/message',{tel: tel},function(i){
+      if(i.error == 0){
+        e.alert(i.msg);
+        tt.setData({
+          code:i.code,
+          disabled:true,
         })
-    }
+        tt.countDownetCode(tt);
+      }else{
+        e.alert(i.msg);
+      }
+    })
+
   },
-  selectArea: function (t) {
-    return i.selectArea(this, t)
-  },
-  bindChange: function (t) {
-    return i.bindChange(this, t)
-  },
-  onCancel: function (t) {
-    return i.onCancel(this, t)
-  },
-  onConfirm: function (t) {
-    if (this.data.diyform.template_flag)
-      return i.onConfirm(this, t);
-    var e = this.data.pval,
-      a = this.data.areas,
-      n = this.data.postData;
-    n.city = a[e[0]].name + " " + a[e[0]].city[e[1]].name,
-      this.setData({
-        postData: n,
-        showPicker: false
+  countDownetCode: function (that) {
+    
+    var currentTime = that.data.currentTime;
+    that.setData({
+      time: currentTime + '秒'
+    })
+    var interval = setInterval(function () {
+      that.setData({
+        time: (currentTime - 1) +
+        '秒'
       })
+      currentTime--;
+      if (currentTime <= 0) {
+        clearInterval(interval)
+        that.setData({
+          time: '重新获取',
+          currentTime: 60,
+          disabled: false
+        })
+      }
+    }, 1000);
+    that.setData({
+      interval: interval
+    })
   },
-  getIndex: function (t, e) {
-    return i.getIndex(t, e)
+  inputs: function (i){
+    this.data.inputData[i.target.id] = i.detail.value;
+  },
+  edit_password :function (){
+    var tt = this,
+    data = tt.data.inputData;
+    if((data.paw1).length < 5){
+      e.alert('输入密码不能少于6个字符'); return;
+    }
+    if (data.paw1 != data.paw2){
+      e.alert('输入密码不一致'); return;
+    }
+    if (data.code != tt.data.code || !tt.data.code){
+      e.alert('输入验证码不对'); return;
+    }
+    var updata ={}
+    updata.passType =  tt.data.passType;
+    updata.password = data.paw1;
+    updata.code = data.code;
+    wx.showLoading({
+      title: '操作中',
+      mask: true
+    });
+    e.post("public/edidPassword",updata, function (re) {
+      wx.hideLoading();
+      if(re.error == 0){
+        e.alert(re.msg);
+        tt.setData({
+          showModalPassword: 1
+        })
+        tt.onLoad();
+      }else{
+        e.alert(re.msg);
+      }
+    });
   }
 })
