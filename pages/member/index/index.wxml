@@ -79,11 +79,6 @@
     </navigator>
   </view>
   <view class="fui-cell-group fui-cell-click">
-  <navigator class="fui-cell" hover-class="none" url="/pages/member/favorite/index">
-      <image class="fui-cell-icon" src="{{icons.list}}"></image>
-      <view class="fui-cell-text">个人资料</view>
-      <view class="fui-cell-remark"></view>
-    </navigator>
     <navigator class="fui-cell" hover-class="none" url="/pages/member/address/index">
       <image class="fui-cell-icon" src="{{icons.location}}"></image>
       <view class="fui-cell-text">收货地址管理</view>

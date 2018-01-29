@@ -1,51 +1,50 @@
-<loading hidden="{{show}}">正在加载</loading>
-<view class="page navbar" wx:if="{{show}}">
-  <view class="fui-cell-group" wx:if="{{openbind}}">
-    <view class="fui-cell must">
-      <view class="fui-cell-label">手机号</view>
-      <view class="fui-cell-info">{{member.mobile}}({{member.mobileverify == 1 ? '已绑定' : '未绑定'}})</view>
-      <navigator class="fui-cell-remark" hover-class="none" url="/pages/member/bind/index">
-        {{member.mobileverify == 1 ? '更换绑定' : '立即绑定'}}
-      </navigator>
+<view class="page">
+  <view class='header'>
+    <view class='header-title'>
+      账户安全设置
     </view>
   </view>
-  <view class="fui-cell-group" wx:if="{{!diyform.template_flag}}">
-    <view class="fui-cell must ">
-      <view class="fui-cell-label ">姓名</view>
-      <view class="fui-cell-info">
-        <input class="fui-input" data-type="realname" bindinput="onChange" placeholder="请输入您的姓名" value="{{postData.realname}}" />
+  <view class='box-content'>
+    <view class='box-content-list'>
+      <view class='list list-icon'>
+      <image src='/static/images/come_from_verify.png/'></image>
       </view>
+      <view class='list list-title'>登陆密码</view>
+      <view class='list list-btn' bindtap='deitPassword' id='loginPassword'>修改</view>
     </view>
-    <view class="fui-cell must" wx:if="{{!openbind}}">
-      <view class="fui-cell-label">手机号</view>
-      <view class="fui-cell-info">
-        <input class="fui-input" data-type="mobile" type="number" bindinput="onChange" maxlength="11" placeholder="请输入您的手机号" value="{{postData.mobile}}" />
+    <view class='box-content-list'>
+      <view class='list list-icon'>
+      <image src='/static/images/chatrecord_key.png/'></image>
       </view>
-    </view>
-    <view class="fui-cell">
-      <view class="fui-cell-label">微信号</view>
-      <view class="fui-cell-info">
-        <input class="fui-input" bindinput="onChange" data-type="weixin" placeholder="请输入您的微信号" value="{{postData.weixin}}" />
+      <view class='list list-title'>
+        支付密码
       </view>
-    </view>
-    <view class="fui-cell">
-      <view class="fui-cell-label">出生日期</view>
-      <view class="fui-cell-info">
-        <picker mode="date" bindchange="onChange" data-type="birthday" value="{{postData.birthday}}">
-          <view>{{postData.birthday || '选择出生日期'}}</view>
-        </picker>
-      </view>
-    </view>
-    <view class="fui-cell">
-      <view class="fui-cell-label ">所在城市</view>
-      <view class="fui-cell-info" bindtap="selectArea" data-area="{{postData.city}}">{{!postData.city ? '请选择所在城市' : postData.city}}</view>
+      <view class='list list-btn' bindtap='deitPassword' id='payPassword'>修改</view>
     </view>
   </view>
-  <block wx:else><include src="/pages/common/diyform.wxml"/></block>
-  <include src="/pages/common/city-picker.wxml"/>
-  <view class="fui-mask {{showPicker ? 'show' : ''}}"></view>
-  <view bindtap="submit" class="btn btn-success block">确认修改</view>
-  <view class="fui-toast {{FoxUIToast.show ? 'in' : 'out'}}">
-    <view class="text">{{FoxUIToast.text}}</view>
+  <view class='box-end'>
   </view>
 </view>
+<!--密码修改-->
+<modal title="密码修改" hidden="{{showModalPassword}}" confirm-text="确定" cancel-text="取消" bindconfirm="edit_password" bindcancel="listenerCancel">
+ <view class='model-content'>
+    <view class='model-content-lists'>
+      <view class='model-content-list'>输入密码</view>
+      <view class='model-content-list input'>
+      <input class='input' value="{{pass}}" password type="text" bindinput="inputs" id='paw1' placeholder="请输入密码"/>
+      </view>
+    </view>
+    <view class='model-content-lists'>
+      <view class='model-content-list'>再输密码</view>
+      <view class='model-content-list input'>
+      <input class='input' value="{{pass}}" password type="text" bindinput="inputs" id='paw2' placeholder="请再次输入密码"/>
+      </view>
+    </view>
+    <view class='model-content-lists'>
+      <view class='model-content-list title'>
+      <input class='input' value='{{pass}}'  type="text" bindinput="inputs" id='code' placeholder="输入验证码"/>
+      </view>
+      <view class='model-content-list btn btn-code' disabled="{{disabled}}" bindtap='getCode' >{{time}}</view>
+    </view>
+  </view>
+</modal>
