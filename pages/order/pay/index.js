@@ -19,7 +19,7 @@ Page({
     showModalAddPass: 1,
     showModalAddEbPay: 1,
     pass: {},
-    ex_btn:'btn-success',
+    ex_btn: 'btn-success',
     se_btn: '',
   },
   onLoad: function (e) {
@@ -31,9 +31,9 @@ Page({
   onShow: function () {
     this.get_list();
   },
-  get_list: function (load = false,sef = false) {
+  get_list: function (load = false, sef = false) {
     var t = this;
-    e.get("test/pay", { order_no: this.data.order_no,sef:sef }, function (i) {
+    e.get("test/pay", { order_no: this.data.order_no, sef: sef }, function (i) {
       console.log(i);
       if (i.err_code == 0) {
         i.err_msg.user_address || wx.navigateTo({
@@ -43,11 +43,18 @@ Page({
           show: 1,
           list: i.err_msg
         });
+        if (i.err_msg.order.shipping_method == 'selffetch') {
+          t.setData({
+            ex_btn: '',
+            se_btn: 'btn-success',
+            is_hidd_ex: 1,
+          })
+        }
       } else {
         e.alert(i.err_msg);
       }
 
-      if (load){
+      if (load) {
         wx.hideLoading();
       }
     })
@@ -65,18 +72,18 @@ Page({
     var tt = this;
     var data = {}
     data.payType = e.pdata(t).type;
-    if (tt.data.is_sef){
+    if (tt.data.is_sef) {
       data.shipping_method = 'selffetch';
       data.selffetch_id = tt.data.list.selffetch_list[0].pigcms_id;
       data.selffetch_name = tt.data.list.user.nickname;
       data.selffetch_phone = tt.data.list.user.phone;
       //data.selffetch_date = $('.js-logistics-content .js-time').eq(0).val();
       //data.selffetch_time = $('.js-logistics-content .js-time').eq(1).val();
-    }else{
+    } else {
       data.address_id = tt.data.list.user_address.address_id;
       data.postage_list = tt.data.list.postage_list;
     }
-    
+
     data.is_app = true;
     data.orderNo = tt.data.order_no;
     data.appType = 'wxapp';
@@ -101,7 +108,10 @@ Page({
 
           }, function (i) {
             console.log(i);
-            e.alert(i.errMsg);
+            if (i.errMsg == 'requestPayment:fail cancel') {
+              e.alert('取消支付');
+            }
+            tt.get_list();
           })
         }
       } else {
@@ -165,7 +175,8 @@ Page({
       showModalStatus: true,
       showModalAddPass: true,
       showModalAddEbPay: true,
-    })
+    });
+    this.get_list();
   },
   listenerConfirm: function () {
     var tt = this;
@@ -256,31 +267,31 @@ Page({
       console.log(re);
     })
   },
-  choice_expare: function(i){
-    if (this.data.list.order.status == 1){
-       return;
+  choice_expare: function (i) {
+    if (this.data.list.order.status == 1) {
+      return;
     }
     wx.showLoading({
       title: '操作中',
       mask: true
     });
     i.currentTarget.id
-    if (i.currentTarget.id == 'sef'){
-      var ex_btn =  '',
-      se_btn =  'btn-success',
-      is_sef = true;
-      this.get_list(1,1);
-    }else{
+    if (i.currentTarget.id == 'sef') {
+      var ex_btn = '',
+        se_btn = 'btn-success',
+        is_sef = true;
+      this.get_list(1, 1);
+    } else {
       var ex_btn = 'btn-success',
         se_btn = '',
         is_sef = false;
-        this.get_list(1);
+      this.get_list(1);
     }
     this.setData({
       ex_btn: ex_btn,
       se_btn: se_btn,
       is_sef: is_sef,
     })
-    
+
   },
 })

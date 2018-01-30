@@ -186,13 +186,11 @@ Page({
     var i = this,
       s = i.data.optionid,
       r = i.data.diyform;
-    if (n > 0 && 0 == s)
-      return void a.toast(i, "请选择规格");
-    // if (r && r.fields.length > 0) {
-    //   if (!o.verify(i, r))
-    //     return;
-   /* console.log(t.target.dataset.addcart);
-    return;*/
+    if (n > 0 && 0 == s) return void a.toast(i, "请选择规格");
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     e.post("order/add", {
       product_id: i.data.options.id,
       total: t.target.dataset.total,//商品的数量
@@ -200,34 +198,23 @@ Page({
       send_other: t.target.dataset.send_other,
       addcart: t.target.dataset.addcart
     }, function (t) {
+      wx.hideLoading();
       if (t.err_code == 0) {
         wx.redirectTo({
-          /* url: "/pages/order/create/index?id=" + i.data.options.id + "&total=" + i.data.total + "&optionid=" + s + "&gdid=" + t.gdid*/
-          url: "/pages/order/pay/index?order_no="+t.err_msg
+          url: "/pages/order/pay/index?order_no=" + t.err_msg
         })
       }
     })
-    // } else
-    //   wx.redirectTo({
-    //     url: "/pages/order/create/index?id=" + i.data.options.id + "&total=" + i.data.total + "&optionid=" + s
-    //   })
   },
   getCart: function (t) {
     var i = this,
       s = i.data.optionid,
       r = i.data.diyform;
-    if (n > 0 && 0 == s)
-      return void a.toast(i, "请选择规格");
-    // if (r && r.fields.length > 0) {
-    //   if (!o.verify(i, r))
-    //     return;
-    /*console.log(i.data.options.id);
-    console.log(i.data.addcart);
-    console.log(i.data.total);
-    console.log(i.data.send_other);
-    return;*/
-    /*console.log(t.target.dataset.addcart);
-    return;*/
+    if (n > 0 && 0 == s) return void a.toast(i, "请选择规格");
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     e.post("order/add", {
       product_id: i.data.options.id,
       total: t.target.dataset.total,//商品的数量
@@ -235,6 +222,7 @@ Page({
       send_other: t.target.dataset.send_other,
       addcart: t.target.dataset.addcart
     }, function (t) {
+      wx.hideLoading();
       if (t.err_code == 0) {
         wx.showModal({
           title: '提示',
@@ -268,31 +256,7 @@ Page({
         })
         return;
       }
-      /*e.post("member/cart/add", {
-        product_id: i.data.options.id,
-        total: i.data.total,//商品的数量
-        optionid: s,
-        diyformdata: r.f_data
-      }, function (t) {
-        0 == t.error && i.setData({
-          "goods.cartcount": t.cartcount,
-          active: "",
-          slider: "out"
-        })
-      })*/
     })
-    /*} else
-      e.post("member/cart/add", {
-        id: i.data.options.id,
-        total: i.data.total,
-        optionid: s
-      }, function (t) {
-        0 == t.error && i.setData({
-          "goods.cartcount": t.cartcount,
-          active: "",
-          slider: "out"
-        })
-      })*/
   },
   getDetail: function (t) {
     var a = this,
@@ -328,19 +292,6 @@ Page({
           a.setData({
             discountTitle: "活动已结束"
           });
-        /* if (t.goods.istime > 0) {
-           clearInterval(a.data.timer);
-           var r = setInterval(function () {
-             a.countDown(t.goods.timestart, t.goods.timeend, "istime")
-           }, 1000);
-           a.setData({
-             timer: r
-           })
-         }*/
-        /* t.goods.ispresell > 0 && a.setData({
-           preselltimeend: t.goods.preselltimeend || t.goods.preselltimeend.getMonth() + "月" + t.goods.preselltimeend || t.goods.preselltimeend.getDate() + "日 " + t.goods.preselltimeend || t.goods.preselltimeend.getHours() + ":" + t.goods.preselltimeend || t.goods.preselltimeend.getMinutes() + ":" + t.goods.preselltimeend || t.goods.preselltimeend.getSeconds(),
-           presellsendstatrttime: t.goods.presellsendstatrttime || t.goods.presellsendstatrttime.getMonth() + "月" + t.goods.presellsendstatrttime || t.goods.presellsendstatrttime.getDate() + "日"
-         }),*/
         t.goods.comment_data.total > 0 && e.get("comment/comment_list", {
           data_id: a.data.options.id,
           type: "PRODUCT"
@@ -392,18 +343,18 @@ Page({
     var a = this,
       o = t.currentTarget.dataset.tap,
       i = t.currentTarget.dataset.buytype;
-      e.get("goods/info", {
-        product_id: a.data.goods.product.product_id
-      }, function (t) {
-        wx.hideLoading();
-        a.setData({
-          pickerOption: t.err_msg,
-          active: "active",
-          slider: "in",
-          tempname: "select-picker",
-          buyType: i
-        });
-      })
+    e.get("goods/info", {
+      product_id: a.data.goods.product.product_id
+    }, function (t) {
+      wx.hideLoading();
+      a.setData({
+        pickerOption: t.err_msg,
+        active: "active",
+        slider: "in",
+        tempname: "select-picker",
+        buyType: i
+      });
+    })
   },
   for_property_list: function (t) {
     var a = t.target.dataset.idx,
