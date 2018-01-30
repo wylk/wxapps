@@ -1,0 +1,73 @@
+<loading hidden="{{show}}">正在加载</loading>
+<view class="page navbar order" wx:if="{{show}}">
+
+  <view class="contain" wx:if="{{list.length != 0}}">
+    <block wx:for="{{list}}">
+      <view class="fui-list-group noclick">
+        <!--<navigator hover-class="none" url="/pages/order/detail/index?id={{item.order_id}}">订单详情-->
+          <view class="fui-list-group-title">
+            <view class="order-num">退货状态：
+              <text>{{item.status_txt}}</text>
+            </view>
+            <view class="statuscss" wx:if="{{item.status<5}}">
+              <view bindtap="cancel" class="btn btn-default-o btn-cancel"  data-orderid="{{item.id}}">
+                取消退货
+              </view>
+            </view>
+          </view>
+          <block>
+            <view class="fui-list goods-info">
+               <navigator hover-class="none" url="/pages/goods/detail/index?id={{item.product_id}}">
+                <view class="fui-list-media">
+                  <image src="{{item.image}}" class="round goods_img"></image>
+                </view>
+              </navigator>
+              <view class="fui-list-inner">
+                <view class="text text-left">{{item.name}}</view>
+                <block wx:for="{{item.sku_data_arr}}" wx:for-item="val">
+                <view class="subtitle text-left">{{val.name}} {{val.value}}</view>
+                </block>
+              </view>
+              <view class="num">
+                <view class="text-right">￥
+                  <text>{{item.pro_price}}</text>
+                </view>
+                <view class="text-right">退货数量：
+                  <text>{{item.pro_num}}</text>
+                </view>
+              </view>
+
+            </view>
+
+          </block>
+          <view class="fui-list list-padding btn1">
+
+            <view bindtap="cancel" class="btn btn-default btn-default-o" data-orderid="{{item.id}}" wx:if="{{item.status != '2' && item.status != '6'}}">
+                取消退货
+            </view>
+            <!--<view bindtap="return_detail" class="btn btn-primary btn-primary-o" data-orderid="{{item.id}}" wx:if="{{item.status != '2' && item.status != '6'}}">
+                退货详情
+            </view>-->
+            <navigator hover-class="none" class="btn btn-primary btn-primary-o" url="/pages/order/refund_detail/index?pigcms_id={{item.order_product_id}}&order_no=WJ{{item.order_no}}">
+                退货详情
+              </navigator>
+        </view>
+
+        <!--</navigator>-->
+      </view>
+    </block>
+  </view>
+  <view class="center" wx:if="{{list.length == 0 && empty}}">
+    <view class="empty">
+      <image class="light" src="/static/images/icon/lights-128.png"></image>
+      <view class="text-cancel">您没有退货</view>
+      <navigator open-type="switchTab" url="/pages/index/index" class="btn btn-default-o">
+        到处逛逛
+      </navigator>
+    </view>
+  </view>
+  <navigator hover-class="none" open-type="switchTab" url="/pages/member/index/index" class="fui-dot">
+    <image src="/static/images/icon-white/people.png"></image>
+  </navigator>
+  <include src="/pages/order/public/verify.wxml" />
+</view>

@@ -55,8 +55,8 @@
         </view>
         <view class="text">已完成</view>
       </navigator>
-      <navigator hover-class="none" class="fui-icon-col" url="/pages/order/index?status=4">
-        <view class="badge" wx:if="{{member.statics.order_4 > 0}}">{{member.statics.order_4}}></view>
+      <navigator hover-class="none" class="fui-icon-col" url="/pages/order/return/index">
+        <view class="badge" wx:if="{{member.returnProduct > 0}}">{{member.returnProduct}}</view>
         <view class="icon">
           <image src="{{icons.refund48}}"></image>
         </view>
