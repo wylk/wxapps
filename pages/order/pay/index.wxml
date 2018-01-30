@@ -37,12 +37,13 @@
   <!--物流-->
   <view class='block-express'>
     配送方式
-    <span id='exp' color='' class="btn {{ex_btn}}" bindtap="choice_expare"> 快递配送 </span>\t\t\t
+    <span id='exp' color='' class="btn {{ex_btn}}" bindtap="choice_expare" wx:if="{{!is_hidd_ex}}"> 快递配送 </span>\t\t\t
 
-    <span id="sef" bindtap="choice_expare" class="btn {{se_btn}}" wx:if="{{list.selffetch_list}}"> 到店自提 </span>
+    <span id="sef" bindtap="choice_expare" class="btn {{se_btn}}" wx:if="{{list.selffetch_list || list.order.shipping_method == 'selffetch'}}"> 到店自提 </span>
     <view class='bk-express flex-row'>
       <view class="express-user">
         <block wx:if="{{!is_sef}}">
+
           <text>
       {{list.user_address.name}},{{list.user_address.tel}}
       {{list.user_address.province_txt}}\t{{list.user_address.city_txt}}\t{{list.user_address.area_txt}}\t
@@ -52,6 +53,7 @@
 
         <block wx:if="{{is_sef}}">
           <text>
+         
       {{list.selffetch_list[0].name}},{{list.selffetch_list[0].tel}}
       {{list.selffetch_list[0].province_txt}}\t{{list.selffetch_list[0].city_txt}}\t{{list.selffetch_list[0].area_txt}}\t
       {{list.selffetch_list[0].address}}
