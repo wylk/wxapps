@@ -1,9 +1,5 @@
 {
   "pages": [
-<<<<<<< HEAD
-
-=======
->>>>>>> 934406dc9f528ae63e1d3bbbe029a5594d42fe8a
     "pages/public/coupon/index",
     "pages/order/public/index",
     "pages/index/index",

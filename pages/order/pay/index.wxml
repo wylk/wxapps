@@ -37,17 +37,30 @@
   <!--物流-->
   <view class='block-express'>
     配送方式
-    <span class="btn-express"> 快递配送 </span>
+    <span id='exp' color='' class="btn {{ex_btn}}" bindtap="choice_expare"> 快递配送 </span>\t\t\t
+
+    <span id="sef" bindtap="choice_expare" class="btn {{se_btn}}" wx:if="{{list.selffetch_list}}"> 到店自提 </span>
     <view class='bk-express flex-row'>
       <view class="express-user">
-        <text>
+        <block wx:if="{{!is_sef}}">
+          <text>
       {{list.user_address.name}},{{list.user_address.tel}}
       {{list.user_address.province_txt}}\t{{list.user_address.city_txt}}\t{{list.user_address.area_txt}}\t
       {{list.user_address.address}}
       </text>
+        </block>
+
+        <block wx:if="{{is_sef}}">
+          <text>
+      {{list.selffetch_list[0].name}},{{list.selffetch_list[0].tel}}
+      {{list.selffetch_list[0].province_txt}}\t{{list.selffetch_list[0].city_txt}}\t{{list.selffetch_list[0].area_txt}}\t
+      {{list.selffetch_list[0].address}}
+      </text>
+        </block>
+
       </view>
       <view class='express-edit express-right'>
-        <block wx:if="{{list.user_address_list}}" class="">
+        <block wx:if="{{list.user_address_list && !is_sef && list.order.status != '1'}}" class="">
           <button class='ex-btn' bindtap="hideModal" type="primary" plain="false">切换</button>
           <navigator url="/pages/test/test/index?address_id={{list.user_address.address_id}}">
             <button class='ex-btn' type="warn" plain="false">修改</button>
@@ -59,7 +72,7 @@
   <view class='v-line'></view>
   <!--E币支付-->
   <block>
-    <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1}}">
+    <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1 && list.order.status != '1'}}">
       E币{{list.user.point_unbalance}} \t\t 可抵现¥{{list.user.point_unbalance/100}} \t\t\t\t
       <view class='eb-pay-icon'>
         <icon type="{{is_ep?'success_circle':'circle'}}" size="30" bindtap='check_eb' />
@@ -106,7 +119,7 @@
 
 <!--e币支付-->
 <modal title="E币支付" hidden="{{showModalAddEbPay}}" confirm-text="确定" cancel-text="取消" bindconfirm="eb_pay_pass" bindcancel="listenerCancel">
- <view class='eb-pay-title'>使用E币\t\t {{eb_data_price}}</view>
+  <view class='eb-pay-title'>使用E币\t\t {{eb_data_price}}</view>
   <view class="section">
     <input class="input input-pass" password placeholder="请输入支付密码" bindinput="password_pay" maxlength="6" id='pas' />
   </view>
