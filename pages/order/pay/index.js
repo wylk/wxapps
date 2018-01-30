@@ -19,6 +19,8 @@ Page({
     showModalAddPass: 1,
     showModalAddEbPay: 1,
     pass: {},
+    ex_btn:'btn-success',
+    se_btn: '',
   },
   onLoad: function (e) {
     console.log(e);
@@ -27,11 +29,11 @@ Page({
     });
   },
   onShow: function () {
-    this.get_list()
+    this.get_list();
   },
-  get_list: function () {
+  get_list: function (load = false,sef = false) {
     var t = this;
-    e.get("test/pay", { order_no: this.data.order_no }, function (i) {
+    e.get("test/pay", { order_no: this.data.order_no,sef:sef }, function (i) {
       console.log(i);
       if (i.err_code == 0) {
         i.err_msg.user_address || wx.navigateTo({
@@ -43,6 +45,10 @@ Page({
         });
       } else {
         e.alert(i.err_msg);
+      }
+
+      if (load){
+        wx.hideLoading();
       }
     })
   },
@@ -59,8 +65,18 @@ Page({
     var tt = this;
     var data = {}
     data.payType = e.pdata(t).type;
-    data.address_id = tt.data.list.user_address.address_id;
-    data.postage_list = tt.data.list.postage_list;
+    if (tt.data.is_sef){
+      data.shipping_method = 'selffetch';
+      data.selffetch_id = tt.data.list.selffetch_list[0].pigcms_id;
+      data.selffetch_name = tt.data.list.user.nickname;
+      data.selffetch_phone = tt.data.list.user.phone;
+      //data.selffetch_date = $('.js-logistics-content .js-time').eq(0).val();
+      //data.selffetch_time = $('.js-logistics-content .js-time').eq(1).val();
+    }else{
+      data.address_id = tt.data.list.user_address.address_id;
+      data.postage_list = tt.data.list.postage_list;
+    }
+    
     data.is_app = true;
     data.orderNo = tt.data.order_no;
     data.appType = 'wxapp';
@@ -75,9 +91,17 @@ Page({
         if (re.err_code == 0) {
           e.pay(re.err_msg, function (t) {
             console.log(t);
-            "requestPayment:ok" == t.errMsg && console.log('支付成功。。。');
-          }, function (e) {
-            console.log(e);
+            if (t.errMsg == 'requestPayment:ok') {
+              wx.navigateTo({
+                url: "/pages/order/public/index?orderno=" + tt.data.order_no
+              })
+            } else {
+              e.alert(e.errMsg);
+            }
+
+          }, function (i) {
+            console.log(i);
+            e.alert(i.errMsg);
           })
         }
       } else {
@@ -144,7 +168,6 @@ Page({
     })
   },
   listenerConfirm: function () {
-
     var tt = this;
     var address_id = tt.data.address_id;
     !address_id || wx.showLoading({
@@ -196,14 +219,14 @@ Page({
       })
     });
   },
-  password_pay:function(i){
+  password_pay: function (i) {
     this.setData({
       pay_password: i.detail.value
     })
   },
-  eb_pay_pass: function(){
+  eb_pay_pass: function () {
     var data = this.data.eb_data,
-        password = this.data.pay_password;
+      password = this.data.pay_password;
     if (parseInt(password.length) < 5) {
       e.alert('密码不对'); return;
     }
@@ -212,25 +235,52 @@ Page({
       mask: true
     });
     data.pay_password = password;
-    e.post('test/eb_pay',data,function(re){
+    e.post('test/eb_pay', data, function (re) {
       wx.hideLoading();
-      if(re.error == 0){
+      if (re.error == 0) {
         wx.showToast({
           title: re.msg,
           icon: 'succes',
           duration: 1000,
           mask: true
         })
-        setTimeout(function(){
+        setTimeout(function () {
           wx.hideToast()
           wx.navigateTo({
             url: "/pages/order/public/index?orderno=" + re.orderno
           })
-        },2000)
-      }else{
+        }, 2000)
+      } else {
         e.alert(re.msg);
       }
       console.log(re);
     })
+  },
+  choice_expare: function(i){
+    if (this.data.list.order.status == 1){
+       return;
+    }
+    wx.showLoading({
+      title: '操作中',
+      mask: true
+    });
+    i.currentTarget.id
+    if (i.currentTarget.id == 'sef'){
+      var ex_btn =  '',
+      se_btn =  'btn-success',
+      is_sef = true;
+      this.get_list(1,1);
+    }else{
+      var ex_btn = 'btn-success',
+        se_btn = '',
+        is_sef = false;
+        this.get_list(1);
+    }
+    this.setData({
+      ex_btn: ex_btn,
+      se_btn: se_btn,
+      is_sef: is_sef,
+    })
+    
   },
 })
