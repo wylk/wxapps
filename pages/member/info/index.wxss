@@ -3,7 +3,7 @@
   background: #cdcdcd;
 }
 .header{
-  height:170px;
+  height:191px;
   width: 100%;
   background-image:url(https://mall.epaikj.com/static/images/pass_set.jpg);
   position: relative;

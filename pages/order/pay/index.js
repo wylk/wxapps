@@ -31,7 +31,7 @@ Page({
   onShow: function () {
     this.get_list();
   },
-  get_list: function (load = false, sef = false) {
+  get_list: function (load = false, sef = false, refresh = false) {
     var t = this;
     e.get("test/pay", { order_no: this.data.order_no, sef: sef }, function (i) {
       console.log(i);
@@ -41,13 +41,16 @@ Page({
         });
         t.setData({
           show: 1,
-          list: i.err_msg
+          list: i.err_msg,
         });
+        //is_sef: !1,
+        //ex_btn: 'btn-success',
         if (i.err_msg.order.shipping_method == 'selffetch') {
           t.setData({
             ex_btn: '',
             se_btn: 'btn-success',
             is_hidd_ex: 1,
+            is_sef: !1,
           })
         }
       } else {
@@ -82,6 +85,10 @@ Page({
     } else {
       data.address_id = tt.data.list.user_address.address_id;
       data.postage_list = tt.data.list.postage_list;
+      if (tt.data.list.code == '1') {
+        wx.hideLoading();
+        e.alert(tt.data.list.code_msg); return;
+      }
     }
 
     data.is_app = true;
@@ -176,7 +183,7 @@ Page({
       showModalAddPass: true,
       showModalAddEbPay: true,
     });
-    this.get_list();
+    this.get_list(0, 0, 1);
   },
   listenerConfirm: function () {
     var tt = this;
