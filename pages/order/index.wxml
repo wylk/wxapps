@@ -85,11 +85,11 @@
               <navigator hover-class="none" class="btn btn-primary btn-primary-o" url="/pages/order/detail/index?id={{item.order_no_txt}}">
                 详情
               </navigator>
-          <block wx:for="{{item.order_product_list}}" wx:for-index="key" wx:for-item="val">
-              <view bindtap="complete" data-orderid="{{item.order_no_txt}}" class="btn btn-default" wx:if="{{item.status == 7 && val.return_status == '0'}}">
+         
+              <view bindtap="complete" data-orderid="{{item.order_no_txt}}" class="btn btn-default" wx:if="{{item.status == 7}}">
                 交易完成
               </view>
-            </block>
+
           </block>
         </view>
 

@@ -74,8 +74,9 @@
   <view class='v-line'></view>
   <!--E币支付-->
   <block>
+  <wxs module="filters" src="../../addmul.wxs"></wxs>
     <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1 && list.order.status != '1'}}">
-      E币{{list.user.point_unbalance}} \t\t 可抵现¥{{list.user.point_unbalance/100}} \t\t\t\t
+      E币{{list.user.point_unbalance}} \t\t 可抵现¥{{filters.toFix(list.user.point_unbalance*0.01)}} \t\t\t\t
       <view class='eb-pay-icon'>
         <icon type="{{is_ep?'success_circle':'circle'}}" size="30" bindtap='check_eb' />
       </view>

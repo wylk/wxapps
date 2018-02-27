@@ -52,7 +52,7 @@ swiper {
   border-radius: 4%;
 }
 .copyrights{
-  height: 105rpx;
+  height: 257rpx;
   text-align: center;
   background: #FFA500;
   font-size:15px;

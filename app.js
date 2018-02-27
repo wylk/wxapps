@@ -111,7 +111,7 @@ App({
     }, 10)
   },
   url: function (e) {
-      this.setCache("mid", {mid:110}, 7200)
+      this.setCache("mid", {mid:132}, 7200)
   },
   globalData: {
     appid: "wx0374e8ef4f1d6f8e",
