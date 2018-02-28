@@ -54,7 +54,13 @@ Page({
           })
         }
       } else {
-        e.alert(i.err_msg);
+        if (i.err_code == 1000) {
+          wx.navigateTo({
+            url: "/pages/order/public/index?orderno=" + t.data.order_no
+          });
+        } else {
+          e.alert(i.err_msg);
+        }
       }
 
       if (load) {
@@ -110,7 +116,7 @@ Page({
                 url: "/pages/order/public/index?orderno=" + tt.data.order_no
               })
             } else {
-              e.alert(e.errMsg);
+              //e.alert(e.errMsg);
             }
 
           }, function (i) {

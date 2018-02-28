@@ -18,7 +18,7 @@
         </view>
         <view class="fui-list-angle">
           <text class="price">￥{{val.price}}</text>
-          <view bindtap="number" data-id="{{val.pigcms_id}}" data-skuid="{{val.sku_id}}" data-num="{{val.pro_num}}" class="fui-number small" data-max="{{val.sku_num}}" data-min="{{val.minbuy}}">
+          <view bindtap="number" data-proid="{{val.product_id}}" data-id="{{val.pigcms_id}}" data-skuid="{{val.sku_id}}" data-num="{{val.pro_num}}" class="fui-number small" data-max="{{val.sku_num}}" data-min="{{val.minbuy}}">
             <view data-action="minus" class="minus {{val.pro_num <= 1 ? 'disabled' : ''}}">-</view>
             <input disabled="true" name="" type="tel" value="{{val.pro_num}}" class="num shownum">
             </input>
@@ -28,8 +28,6 @@
       </view>
     </view>
   </block>
-
-
   <view class="center" wx:if="{{empty}}">
     <view class="empty">
       <image class="light" src="/static/images/icon/lights-128.png"></image>
