@@ -2,7 +2,9 @@
 var e = require("utils/core.js");
 App({
   onLaunch: function () {
-    var e = this.getCache("userinfo");
+
+    //var e = this.getCache("userinfo");
+    var e = !1;
     this.url();
     e || this.getUserInfo(function (e) { }, function (e, t) {
       var t = t ? 1 : 0;
@@ -53,10 +55,11 @@ App({
     return t
   },
   getUserInfo: function (t, i) {
-    var n = this,
-      a = n.getCache("userinfo");
-    if (a && !a.needauth)
-      return void (t && "function" == typeof t && t(a));
+
+    var n = this;
+     // a = n.getCache("userinfo");
+    //if (a && !a.needauth)
+     // return void (t && "function" == typeof t && t(a));
     wx.login({
       success: function (o) {
         if (!o.code)
@@ -111,7 +114,7 @@ App({
     }, 10)
   },
   url: function (e) {
-      this.setCache("mid", {mid:132}, 7200)
+      this.setCache("mid", {mid:111}, 7200)
   },
   globalData: {
     appid: "wx0374e8ef4f1d6f8e",

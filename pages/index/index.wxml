@@ -32,12 +32,13 @@
     </view>
     <view class="fui-goods-group block border">
       <block wx:for="{{storeRecommand}}" wx:for-index="idx">
+      <navigator url="/pages/goods/detail/index?id={{item.product_id}}">
         <view class="fui-goods-item" data-goodsid="{{item.product_id}}" data-type="{{item.type}}">
           <block wx:if="{{item.quantity > 0}}">
-            <navigator url="/pages/goods/detail/index?id={{item.product_id}}">
+            
               <view class="image" style="background-image:url('{{item.image}}');"></view>
               <view class="salez iconfont icon-maiguangliao" wx:if="{{item.quantity <= 0}}"></view>
-            </navigator>
+            
           </block>
           <block wx:if="{{item.quantity <= 0}}">
             <view>
@@ -47,12 +48,10 @@
           </block>
           <view class="detail">
             <block wx:if="{{item.quantity > 0}}">
-              <navigator url="/pages/goods/detail/index?id={{item.product_id}}">
                 <view class="name">
                   <text class="fui-tag fui-tag-danger">销量<text class="sales">{{item.sales}}</text></text>
                   <text class="fui-tag fui-tag-primary">库存<text class="sales">{{item.quantity}}</text></text>
                 </view>
-              </navigator>
             </block>
             <block wx:if="{{item.quantity <= 0}}">
               <view>
@@ -68,6 +67,7 @@
             </view>
           </view>
         </view>
+        </navigator>
       </block>
     </view>
   </view>
@@ -91,7 +91,7 @@
   </view>
   <view class="modal-content">
     <view class="modal-input">
-      <input placeholder-class="input-holder" type="number" maxlength="20" id="password" bindchange="inputChange" class="input" placeholder="请输入密码"></input>
+      <input placeholder-class="input-holder" type="password" maxlength="20" id="password" bindchange="inputChange" class="input" placeholder="请输入密码"></input>
     </view>
   </view>
   <view class="modal-footer">

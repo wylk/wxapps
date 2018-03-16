@@ -10,7 +10,11 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.7.2",
 	"appid": "wx00c0f97d5515a42c",
+<<<<<<< HEAD
 	"projectname": "%E9%80%82%E8%8C%B6",
+=======
+	"projectname": "%E5%85%B1%E8%81%94%E5%95%86%E5%AE%B6",
+>>>>>>> test
 	"condition": {
 		"search": {
 			"current": -1,

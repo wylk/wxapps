@@ -25,5 +25,11 @@ Page({
     wx.switchTab({
       url: '/pages/index/index'
     })
+  },
+   toasts: function () {
+    var orderno = this.data.orderno;
+    wx.navigateTo({
+      url: '/pages/order/detail/index?id=WJ20180228151101779996'
+    })
   }
 })

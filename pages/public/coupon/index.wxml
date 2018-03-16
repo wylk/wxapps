@@ -24,4 +24,8 @@
       <view class='copyrights'>
         由E派科技提供技术支持
       </view>
+
+      <!--<view class='fu-footer-btn' bindtap="toasts">
+      进入商城
+    </view>-->
 </view>
