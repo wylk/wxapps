@@ -1,5 +1,6 @@
 body {
   background: #f9f9f9;
+  color:#FFF;
 }
 
 .fui-header {
@@ -8,15 +9,16 @@ body {
 }
 .store_log{
   width: 100%;
-  height: 50px;
-  background: #FFA500;
+  height: 80px;
+  background: #64b464;
 }
 .store_log_img{
-  width: 30%;
+  width: 47%;
   margin: 0px auto;
+  padding:10px;
 }
 .log_img {
-    height: 50px;
+    height: 56px;
     width: 100%;
 }
 .coupon-group .coupon-item .inner .text .big {
@@ -35,8 +37,8 @@ swiper {
   height: 321px;
 }
 .fu-footer{
-  height:312rpx;
-  background: #FFA500;
+  height:270rpx;
+  background: #64b464;
   display: flex;
   align-items: center;
 }
@@ -52,10 +54,11 @@ swiper {
   border-radius: 4%;
 }
 .copyrights{
-  height: 257rpx;
+  height: 105rpx;
   text-align: center;
-  background: #FFA500;
+  background: #64b464;
   font-size:15px;
+  color:#FFF;
 
 }
 

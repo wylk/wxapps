@@ -1,7 +1,7 @@
 <view class="page">
   <view class='store_log'>
     <view class='store_log_img'>
-      <image class="log_img" src='https://mall.epaikj.com/source/tp/Project/tpl/Static/images/logo-pigcms.png'></image>
+      <image class="log_img" src='https://mall.epaikj.com/static/weixinapp/logo.png'></image>
     </view>
   </view>
 

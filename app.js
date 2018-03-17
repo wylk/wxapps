@@ -111,10 +111,10 @@ App({
     }, 10)
   },
   url: function (e) {
-      this.setCache("mid", {mid:132}, 7200)
+      this.setCache("mid", {mid:111}, 7200)
   },
   globalData: {
-    appid: "wx0374e8ef4f1d6f8e",
+    appid: "wx00c0f97d5515a42c",
     api: "https://mall.epaikj.com/wxapp.php?",
     approot: "https://mall.epaikj.com/",
     userInfo: null

@@ -5,9 +5,9 @@ Page({
   data: {
     store:!1,
     imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      'https://mall.epaikj.com/static/weixinapp/1_463.jpg',
+      'https://mall.epaikj.com/static/weixinapp/1_519.jpg',
+      'https://mall.epaikj.com/static/weixinapp/1_888.jpg'
     ],
     indicatorDots: 1,
     autoplay: 1,
