@@ -1501,9 +1501,12 @@ view{font-size:14px}
 .fui-goods-group.block {
   padding: 0 10rpx;
 }
-
+.fui-goods-group.block navigator{
+  width:50%;
+  display:inline-block;
+}
 .fui-goods-group.block .fui-goods-item {
-  width: 50%;
+  width: 100%;
   border-bottom: 0;
   border-radius:10%;
   background: none;

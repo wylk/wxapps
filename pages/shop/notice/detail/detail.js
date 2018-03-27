@@ -34,5 +34,7 @@ Page({
             createtime: e.createtime
           })
       })
+  },
+  onShareAppMessage: function(){
   }
 })

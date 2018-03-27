@@ -47,4 +47,6 @@ Page({
   onReachBottom: function () {
     this.data.loaded || this.getList()
   },
+  onShareAppMessage: function(){
+  }
 })

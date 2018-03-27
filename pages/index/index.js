@@ -131,5 +131,7 @@ Page({
     this.getRecommand(),
       this.getShopMsg();
     this.getUser();
+  },
+  onShareAppMessage: function(){
   }
 })

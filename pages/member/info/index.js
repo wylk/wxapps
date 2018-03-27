@@ -62,7 +62,7 @@ Page({
 
   },
   countDownetCode: function (that) {
-    
+
     var currentTime = that.data.currentTime;
     that.setData({
       time: currentTime + '秒'
@@ -121,5 +121,7 @@ Page({
         e.alert(re.msg);
       }
     });
+  },
+  onShareAppMessage: function(){
   }
 })

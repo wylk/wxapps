@@ -121,5 +121,7 @@ App({
     api: "https://mall.epaikj.com/wxapp.php?",
     approot: "https://mall.epaikj.com/",
     userInfo: null
+  },
+  onShareAppMessage: function(){
   }
 })
