@@ -61,6 +61,8 @@ Page({
     var data = {}
     data.password = this.data.inputdata.password;
     data.tel = this.data.inputdata.tel;
+    //data.userinfo = t.getCache("userinfo");
+    //console.log(data);return;
     !data.tel || !data.password || a.get('public/binding_user', data, function (re) {
       if (re.error == 0) {
         ts.hideModal();
@@ -85,6 +87,8 @@ Page({
     add && (this.data.inputdata[i.currentTarget.id] = val);
   },
   getUser: function () {
+    var ss = t.getCache("userinfo");
+    console.log(ss);
     var tt = this;
     a.get('public/getUser', {}, function (i) {
       i.error == 1 && tt.showDialogBtn(tt);

@@ -233,6 +233,7 @@
   <view wx:if="{{order.diyformfields.length > 0}}">
     <template is="diyform" data="{{diyform:order}}"></template>
   </view>
+
   <view class="operate">
     <navigator open-type="redirect" url="/pages/order/index?status=6" class="btn btn-default">
       我的订单

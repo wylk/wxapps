@@ -22,13 +22,13 @@ Page({
     this.get_cart()
   },
   get_cart: function () {
-    var t;
-      i = this
-    e.get("cart/get_cart", {}, function (e) {
+    var t,
+      i = this;
+    e.get("cart/get_cart", {}, function (re) {
       t = {
         show: !0,
-        empty: e.error || !1,
-        list: e.msg || !1,
+        empty: re.error || !1,
+        list: re.msg || !1,
         checked: !1,
         radio: 1,
         all: !1,
@@ -126,6 +126,7 @@ Page({
       num < 1 || s.num == s.max || e.post("cart/update", {
       id: s.id,
       skuId: s.skuid,
+      proId: s.proid,
       num: num
     }, function (t) {
       a.get_cart()
