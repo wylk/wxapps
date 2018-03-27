@@ -53,7 +53,7 @@
 
         <block wx:if="{{is_sef}}">
           <text>
-         
+
       {{list.selffetch_list[0].name}},{{list.selffetch_list[0].tel}}
       {{list.selffetch_list[0].province_txt}}\t{{list.selffetch_list[0].city_txt}}\t{{list.selffetch_list[0].area_txt}}\t
       {{list.selffetch_list[0].address}}
@@ -78,7 +78,7 @@
     <view class='eb-pay flex-row' wx:if="{{list.user.point_unbalance > 1 && list.order.status != '1'}}">
       E币{{list.user.point_unbalance}} \t\t 可抵现¥{{filters.toFix(list.user.point_unbalance*0.01)}} \t\t\t\t
       <view class='eb-pay-icon'>
-        <icon type="{{is_ep?'success_circle':'circle'}}" size="30" bindtap='check_eb' />
+        <icon type="{{is_ep?'success_circle':'circle'}}" size="18" bindtap='check_eb' />
       </view>
     </view>
   </block>
@@ -90,7 +90,7 @@
   </view>
   <view class='v-line'></view>
   <!--支付-->
-  <view style="margin:33px auto;">
+  <view style="margin:15px auto;">
     <block wx:if="{{!is_eb}}">
       <button class="marginview" data-type="weixin" bindtap="pay">微信安全支付</button>
     </block>

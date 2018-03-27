@@ -1,3 +1,4 @@
+view{font-size:14px}
 .btn {
   -moz-appearance: none;
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -63,6 +64,7 @@
   background: #04be02;
   color: #fff;
   border: 1px solid #04ab02;
+  padding:5px;
 }
 
 .btn.btn-success:active, .btn.btn-success.disabled {
@@ -111,6 +113,7 @@
   background: transparent;
   color: #333;
   border: 1px solid #333;
+  padding:5px;
 }
 
 .btn.btn-default-o:active {
@@ -149,6 +152,7 @@
   background: transparent;
   color: #ef4f4f;
   border: 1px solid #ef4f4f;
+  padding:5px;
 }
 
 .fui-header {
@@ -834,7 +838,6 @@
 
 .fui-list-inner .subtitle {
   position: relative;
-  font-size: 30rpx;
   color: #444;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -843,13 +846,11 @@
 
 .fui-list-inner .text {
   position: relative;
-  font-size: 26rpx;
   color: #666;
 }
 
 .fui-list-inner .bar {
   position: relative;
-  font-size: 26rpx;
   color: #666;
   margin-top: 12rpx;
   padding-top: 8rpx;
@@ -1503,8 +1504,8 @@
 
 .fui-goods-group.block .fui-goods-item {
   width: 50%;
-  float: left;
   border-bottom: 0;
+  border-radius:10%;
   background: none;
   padding: 10rpx;
   display: block;
@@ -1539,6 +1540,9 @@
 
 .fui-goods-group.block {
   padding: 8rpx;
+  display:flex;
+  flex-wrap:wrap-reverse;
+  background-color:#64b464;
 }
 
 .fui-goods-group.block .fui-goods-item .image {

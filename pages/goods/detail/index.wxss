@@ -117,9 +117,9 @@ picker-view-column {
 }
 
 .goods-detail-info .wxParse-p .wxParse-inline {
-  font-size: 34rpx;
   line-height: 50rpx;
-  margin: 20rpx 0 40rpx 0;
+  font-size:12px;
+  margin: 10rpx 50rpx;
 }
 
 .comment_all {
@@ -193,9 +193,6 @@ picker-view-column {
 }
 
 .fui-detail-group .fui-cell .flex {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   font-size: 24rpx;
   color: #c0c0c0;
@@ -203,15 +200,17 @@ picker-view-column {
 }
 
 .fui-detail-group .fui-cell .flex text {
-  width: 100%;
+  width:20%;
   text-align: center;
 }
 
 .fui-detail-group .fui-cell .flex text:first-child {
+  width:25%;
   text-align: left;
 }
 
 .fui-detail-group .fui-cell .flex text:last-child {
+  width:38%;
   text-align: right;
 }
 
@@ -1193,4 +1192,12 @@ picker-view-column {
 }
 .entry_shop{
   float:right;
+  background-color:#444;
+  display:inline;
+  color:#FFF;
+  text-align:center;
+}
+.proname{
+  height:28px;
+  font-size:16px;
 }

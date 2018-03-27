@@ -22,9 +22,9 @@
   margin-right:30px;
 }
 .v-line{
-  height:10px;
+  height:5px;
   background:#f7f7f7;
-  width: 100%;
+  width:100%;
 }
 .btn-express{
   height:30px;
@@ -33,22 +33,24 @@
   color:#FF8C00;
 }
 .ex-btn{
-  height: 30px;
-  line-height: 30px;
+  height:32px;
   margin-top:5px;
+  font-size:12px;
+  width:60px;
 }
 .eb-pay-icon{
   margin-left:54px;
   margin-right:20px;
+  margin-top:5px;
 }
 .total-msg{
-  height: 60px;
-  text-align: center;
-  line-height: 60px;
+  height:40px;
+  text-align:center;
+  line-height:40px;
 }
 .eb-pay{
-  height:60px;
-  line-height: 60px;
+  height:40px;
+  line-height:40px;
   padding-left:10px;
   display:flex;
   justify-content:flex-end;
@@ -77,14 +79,16 @@
   justify-content:flex-end;
 }
 .block-express{
-  margin-top:10px;
   min-height:70px;
+  width:90%;
+  margin:5px auto;
 }
 .message-text {
   border: 1px solid #8a8a8a;
   height: 35px;
   width: 90%;
   margin: 12px auto;
+  padding:5px;
 }
 
 .marginview {

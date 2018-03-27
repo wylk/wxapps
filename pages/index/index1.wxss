@@ -5,7 +5,7 @@
 .header-back-img{
   height:112px;
   width: 100%;
-  background-image:url(https://pic.mall.epaikj.com/images/000/000/110/201801/5a571c7702aa5.jpg 
+  background-image:url(https://pic.mall.epaikj.com/images/000/000/110/201801/5a571c7702aa5.jpg
 );
 position: relative;
 background-repeat: no-repeat;
@@ -41,6 +41,8 @@ align-items:flex-end;
   display: flex;
   justify-content:flex-end;
   align-items:center;
+  background-color:#64b464;
+
 }
 .content-title{
   height:40px;
@@ -72,7 +74,10 @@ align-items:flex-end;
 
 .icon-lianxiren:before { content: "\e615"; }
 .index_name{
-    font-size: 13px;
+    font-size: 12px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 .sales{
     margin-left:3px;

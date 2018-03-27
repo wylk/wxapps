@@ -15,10 +15,10 @@ Page({
     duration: 1000,
   },
   onLoad: function (e) {
-    
+
   },
   onShow: function () {
-    
+
   },
   toast :function(){
     console.log(2134);
