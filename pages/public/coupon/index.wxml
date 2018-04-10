@@ -18,11 +18,11 @@
   <view></view>
   <view class="fu-footer">
     <view class='fu-footer-btn' bindtap="toast">
-      进入商城
+      进入茶城
     </view>
   </view>
       <view class='copyrights'>
-        由E派科技提供技术支持
+        由壹商城提供技术支持
       </view>
 
 </view>
