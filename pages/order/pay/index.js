@@ -112,9 +112,13 @@ Page({
           e.pay(re.err_msg, function (t) {
             console.log(t);
             if (t.errMsg == 'requestPayment:ok') {
-              wx.navigateTo({
-                url: "/pages/order/public/index?orderno=" + tt.data.order_no
-              })
+              tt.socket_order();
+              setTimeout(function(){
+                wx.closeSocket();
+                wx.navigateTo({
+                  url: "/pages/order/public/index?orderno=" + tt.data.order_no
+                })
+              },1000);
             } else {
               //e.alert(e.errMsg);
             }
@@ -249,6 +253,7 @@ Page({
     })
   },
   eb_pay_pass: function () {
+    var tt = this;
     var data = this.data.eb_data,
       password = this.data.pay_password;
     if (parseInt(password.length) < 5) {
@@ -267,9 +272,11 @@ Page({
           icon: 'succes',
           duration: 1000,
           mask: true
-        })
+        });
+        tt.socket_order();
         setTimeout(function () {
-          wx.hideToast()
+          wx.hideToast();
+          wx.closeSocket();
           wx.navigateTo({
             url: "/pages/order/public/index?orderno=" + re.orderno
           })
@@ -306,5 +313,22 @@ Page({
       is_sef: is_sef,
     })
 
+  },
+  socket_order:function(){
+    wx.connectSocket({
+      url: 'wss://tui.51ao.com'
+    });
+    wx.onSocketOpen(function (res) {
+      var u = t.getCache("mid");
+      var toUserId = 'store'+ u.mid;
+      var name = 1;
+      var sends = {
+        procotol: 'p2p',
+        name: name,
+        to: toUserId,
+        msg: '语音播报'
+      };
+      wx.sendSocketMessage({ data: JSON.stringify(sends)});
+    });
   },
 })
